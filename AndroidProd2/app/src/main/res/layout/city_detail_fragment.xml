@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/city_detail_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+     <LinearLayout
+         android:layout_width="match_parent"
+         android:layout_height="0dp"
+         android:layout_weight="1"
+         android:layout_margin="@dimen/border_margin"
+         android:background="@color/colorBlackFone"
+         android:orientation="vertical">
+        <TextView
+            android:id="@+id/airhumiditytextView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginTop="@dimen/layout_marginTop"
+            android:layout_marginStart="@dimen/textview_marginStart"
+            android:text="@string/airhumidity"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/title_textsize" />
+
+        <TextView
+            android:id="@+id/temperaturetextView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="7"
+            android:layout_marginStart="@dimen/textview_marginStart"
+            android:text="---"
+              android:theme="@style/bigTextTheme"/>
+       </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/LinearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_margin="@dimen/border_margin"
+            android:layout_marginTop="1dp"
+            android:background="@color/colorBlackFone"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/gridtextView"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_marginStart="@dimen/text_margin"
+                android:text="@string/weekforecast"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/title_textsize"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/weekdays"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="4"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager">
+            </androidx.recyclerview.widget.RecyclerView>
+        </LinearLayout>
+    </LinearLayout>
