@@ -16,7 +16,7 @@ public class CityLoader {
     protected Context context;
     protected List<CityData> cityList;
     private String defaultCityName = "";
-    private String defaultKey = "";
+    private String defaultKey = "Казань";
     private static CityLoader cityLoader;
     protected Observable observable;
     protected String searchCityName="";

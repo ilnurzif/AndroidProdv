@@ -1,6 +1,8 @@
 package com.naura.cityApp.ui.citylist;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Handler;
 import android.util.Log;
 import android.widget.Toast;
@@ -51,7 +53,7 @@ public class OpenWeatherMapLoader extends CityLoader {
         return openWeatherMapLoader;
     }
 
-    private static JSONObject getJSONData(String city) {
+    private JSONObject getJSONData(Context context, String city) {
         try {
             URL url = new URL(String.format(OPEN_WEATHER_API_URL, city));
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -85,13 +87,13 @@ public class OpenWeatherMapLoader extends CityLoader {
         new Thread() {
             @Override
             public void run() {
-                final JSONObject jsonObject = getJSONData(city);
+                final JSONObject jsonObject = getJSONData(context, city);
                 if (jsonObject == null) {
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
                             Log.d(LOG_TAG, "not found");
-                            Toast.makeText(context, "not found", Toast.LENGTH_LONG).show();
+                            showDialog(context, context.getString(R.string.server_no_answer));
                         }
                     });
                 } else {
@@ -106,12 +108,26 @@ public class OpenWeatherMapLoader extends CityLoader {
         }.start();
     }
 
+    private void showDialog(Context context, String msg) {
+        AlertDialog.Builder builder=new AlertDialog.Builder(context).setTitle(R.string.warning)
+                .setMessage(msg)
+                .setPositiveButton(R.string.ok_msg,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        });
+        AlertDialog alertDialog=builder.create();
+        alertDialog.show();
+    }
+
     private TheatherData jsonToTheatherData(JSONObject jsonObject, int index) {
         try {
             JSONObject list = jsonObject.getJSONArray("list").getJSONObject(index);
             JSONObject main = list.getJSONObject("main");
             String temper = String.format(Locale.getDefault(), "%.0f", main.getDouble("temp")) + "\u2103";
-            String humidity = String.format(Locale.getDefault(), "%.0f", main.getDouble("humidity")) + "%";
+            String humidity = String.format(Locale.getDefault(), "%.0f", main.getDouble("humidity"));
             String pressure = String.format(Locale.getDefault(), "%.0f", main.getDouble("pressure")) + "hPa";
 
             JSONObject details = list.getJSONArray("weather").getJSONObject(0);

@@ -50,7 +50,7 @@ public class CityListFavorFragment extends Fragment implements Observer {
     private void initVisual(View view) {
         recyclerView = view.findViewById(R.id.citiesRecyclerView);
         recyclerView.setBackgroundColor(getContext().getResources().getColor(R.color.colorGrid));
-        recyclerView.getLayoutParams().height = 230;
+        recyclerView.getLayoutParams().height = 270;
         Observable observable = Observable.getInstance();
         observable.subscribe(this);
         this.cityLoader = OpenWeatherMapLoader.getInstance(getContext());

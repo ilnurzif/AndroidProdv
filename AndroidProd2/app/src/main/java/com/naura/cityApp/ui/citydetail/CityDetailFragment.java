@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -27,6 +28,7 @@ public class CityDetailFragment extends Fragment implements Observer {
     private RecyclerView recyclerView;
     private TextView temperatureTextView;
     private TextView airhumidityTextView;
+    private HumidutyView humidutyView;
     private List<TheatherData> theatherDays = new ArrayList<>();
     private TheatherWeekAdapter adapter;
     private CityLoader cityLoader;
@@ -47,6 +49,7 @@ public class CityDetailFragment extends Fragment implements Observer {
         recyclerView = view.findViewById(R.id.weekdays);
         temperatureTextView = view.findViewById(R.id.temperaturetextView);
         airhumidityTextView = view.findViewById(R.id.airhumiditytextView);
+        humidutyView=view.findViewById(R.id.humidutyView);
 
         Observable observable = Observable.getInstance();
         observable.subscribe(this);
@@ -70,10 +73,8 @@ public class CityDetailFragment extends Fragment implements Observer {
         temperatureTextView.setText(temperatureNow);
 
         String airhumidity = theatherDays.get(0).getAirhumidity();
-        airhumidity = "Влажность " + airhumidity;
-        airhumidity = airhumidity;
-
-        airhumidityTextView.setText(airhumidity);
+        int airhumidity_int= (int) Math.round(Double. parseDouble(airhumidity));
+        humidutyView.setCurrentHumiduty(airhumidity_int);
     }
 
     @Override

@@ -12,7 +12,7 @@
     <string name="menu_slideshow">Slideshow</string>
 
     <string name="home_second">Home Second</string>
-    <string name="airhumidity">Влажность</string>
+    <string name="airhumidity">Влажность воздуха (%)</string>
     <string name="theather">Погода</string>
     <string name="weekforecast">Прогноз на три дня</string>
     <string name="moscow">Москва</string>
@@ -40,4 +40,8 @@
     <string name="myname">Ильнур Загыртдинов ilnurzif@gmail.com +79256696944</string>
     <string name="title_setting">Настройки приложения</string>
     <string name="title_about">О разработчике</string>
+    <string name="warning">Внимание</string>
+    <string name="city_not_found_msg">Город не найден</string>
+    <string name="ok_msg">Понятно</string>
+    <string name="server_no_answer">Сервер не отвечает или неверный запрос</string>
 </resources>

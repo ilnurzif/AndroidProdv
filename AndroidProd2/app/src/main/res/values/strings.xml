@@ -46,4 +46,9 @@
     <string name="search">search_title</string>
     <string name="airhumidityVisible">Отображать влажность</string>
     <string name="descriptionVisible">Отображать описание</string>
+    <string name="warning">Внимание</string>
+    <string name="city_not_found_msg">Город не найден</string>
+    <string name="ok_msg">Понятно</string>
+    <string name="code200_error">Ошибка запроса (код 200)</string>
+    <string name="server_no_answer">Сервер не отвечает или неверный запрос</string>
 </resources>

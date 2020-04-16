@@ -48,7 +48,7 @@ public class MainActivity extends BaseActivity implements Observer {
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        cityLoader =  OpenWeatherMapLoader.getInstance(this);
+        cityLoader = OpenWeatherMapLoader.getInstance(this);
 
         observable = Observable.getInstance();
         observable.subscribe(this);
@@ -63,7 +63,7 @@ public class MainActivity extends BaseActivity implements Observer {
         navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
-   }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -76,7 +76,8 @@ public class MainActivity extends BaseActivity implements Observer {
                     public boolean onQueryTextSubmit(String query) {
                         observable.notify(EventsConst.searchCityEvent, query);
                         return false;
-                     }
+                    }
+
                     @Override
                     public boolean onQueryTextChange(String newText) {
                         return false;
@@ -100,7 +101,7 @@ public class MainActivity extends BaseActivity implements Observer {
     @Override
     public <T> void update(String eventName, T val) {
         if (eventName.equals(EventsConst.selectCityEvent)) {
-          dataLoad((String) val);
+            dataLoad((String) val);
         }
 
         if (eventName.equals(EventsConst.selectCityLoad)) {

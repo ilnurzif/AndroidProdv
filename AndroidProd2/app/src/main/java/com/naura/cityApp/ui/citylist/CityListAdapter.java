@@ -89,7 +89,6 @@ public class CityListAdapter extends RecyclerView.Adapter<CityListAdapter.ViewHo
     private void openCityList(Activity activity, String cityName) {
         cityLoader.setDefaultCityName(cityName);
         observable = Observable.getInstance();
-    //    observable.notify(EventsConst.selectCityEvent, cityName);
         observable.notify(EventsConst.selectCityLoad, cityName);
 
         if (activity.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
@@ -133,13 +132,13 @@ public class CityListAdapter extends RecyclerView.Adapter<CityListAdapter.ViewHo
                 public void onClick(View v) {
                     final String cityName = cityNameTextView.getText().toString();
                     cityLoader.SetlikeCity(cityName);
-                    Snackbar.make(citySmallImageView,R.string.city_add_question, Snackbar.LENGTH_LONG).
-                        setAction(R.string.Yes_const, new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            observable.notify(EventsConst.likeSelectEvent, cityName);
-                        }
-                    }).show();
+                    Snackbar.make(citySmallImageView, R.string.city_add_question, Snackbar.LENGTH_LONG).
+                            setAction(R.string.Yes_const, new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    observable.notify(EventsConst.likeSelectEvent, cityName);
+                                }
+                            }).show();
                 }
             });
 

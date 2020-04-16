@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="HumidutyView">
+        <attr name="dangerLevelColor" format="color"/>
+        <attr name="normLevelColor" format="color"/>
+        <attr name="lowLevelColor" format="color"/>
+        <attr name="currentLevelColor" format="color"/>
+        <attr name="titleTextColor" format="color"/>
+    </declare-styleable>
+</resources>

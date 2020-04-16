@@ -27,7 +27,7 @@
     </style>
 
     <style name="bigTextTheme" parent="AddStylee">
-        <item name="android:textSize">90sp</item>
+        <item name="android:textSize">85sp</item>
         <item name="android:textColor">@color/colorGrid</item>
     </style>
 
