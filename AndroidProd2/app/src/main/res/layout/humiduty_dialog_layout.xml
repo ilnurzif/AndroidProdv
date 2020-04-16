@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <View
+        android:id="@+id/shapeDanger"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/shape_rect" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="250dp"
+        android:layout_height="30dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="10dp"
+        android:layout_toEndOf="@+id/shapeDanger"
+        android:text="Превышение уровня влажности" />
+
+    <View
+        android:id="@+id/shapeNorm"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:layout_alignParentStart="true"
+        android:layout_below="@id/shapeDanger"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/norm_shape" />
+
+    <TextView
+        android:id="@+id/normHumidutyTextView"
+        android:layout_width="250dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="12dp"
+        android:layout_toRightOf="@id/shapeNorm"
+        android:layout_below="@id/textView"
+        android:text="Нормальная влажность" />
+
+    <View
+        android:id="@+id/lowShape"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:layout_below="@id/shapeNorm"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/low_shape"/>
+
+    <TextView
+        android:id="@+id/lowHumidutyTextView"
+        android:layout_width="250dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="14dp"
+        android:layout_toRightOf="@id/lowShape"
+        android:layout_below="@id/normHumidutyTextView"
+        android:text="Пониженная влажность" />
+
+    <Button
+        android:id="@+id/okButton"
+        android:layout_width="148dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/lowHumidutyTextView"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="107dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/ok_msg" />
+</RelativeLayout>
