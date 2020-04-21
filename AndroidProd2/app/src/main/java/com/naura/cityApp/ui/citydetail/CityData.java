@@ -48,20 +48,6 @@ public class CityData {
         return key;
     }
 
-    public Bitmap getSmallImage() {
-        return smallImage;
-    }
-
-    public String getTemperatureNow() {
-        String st = theatherDays.get(0).getTemperature();
-        return st;
-    }
-
-    public String getAirhumidityNow() {
-        String st = theatherDays.get(0).getAirhumidity();
-        return st;
-    }
-
     public String getName() {
         return name;
     }

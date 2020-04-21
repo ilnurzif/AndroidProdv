@@ -47,6 +47,18 @@ public class HumidutyView extends View {
         init();
     }
 
+    public HumidutyView(Context context, @Nullable AttributeSet attrs) {
+        super(context, attrs);
+        initAttr(context, attrs);
+        init();
+    }
+
+    public HumidutyView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        initAttr(context, attrs);
+        init();
+    }
+
     @Override
     public void setOnClickListener(@Nullable OnClickListener l) {
         super.setOnClickListener(l);
@@ -57,12 +69,6 @@ public class HumidutyView extends View {
         invalidate();
     }
 
-    public HumidutyView(Context context, @Nullable AttributeSet attrs) {
-        super(context, attrs);
-        initAttr(context, attrs);
-        init();
-    }
-
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_UP) {
@@ -70,13 +76,6 @@ public class HumidutyView extends View {
             humidutyDescBottomDialog.show(((AppCompatActivity) getContext()).getSupportFragmentManager(), "dialog_fragment");
         }
         return true;
-    }
-
-
-    public HumidutyView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-        initAttr(context, attrs);
-        init();
     }
 
     private void initAttr(Context context, AttributeSet attributeSet) {

@@ -1,6 +1,5 @@
 package com.naura.cityApp.ui.citydetail;
 
-import android.graphics.drawable.shapes.Shape;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;

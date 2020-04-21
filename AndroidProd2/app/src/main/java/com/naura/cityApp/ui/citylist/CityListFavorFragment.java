@@ -53,7 +53,7 @@ public class CityListFavorFragment extends Fragment implements Observer {
         recyclerView.getLayoutParams().height = 270;
         Observable observable = Observable.getInstance();
         observable.subscribe(this);
-        this.cityLoader = OpenWeatherMapLoader.getInstance(getContext());
+        this.cityLoader = CityLoader.getInstance(getContext());// OpenWeatherMapLoader.getInstance(getContext());
     }
 
     @Override

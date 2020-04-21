@@ -21,7 +21,6 @@ import com.naura.myapplication.R;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class CityListFragment extends Fragment implements Observer {
     private List<CityData> cityList;
     private RecyclerView recyclerView;
@@ -46,7 +45,7 @@ public class CityListFragment extends Fragment implements Observer {
         recyclerView = view.findViewById(R.id.citiesRecyclerView);
         Observable observable = Observable.getInstance();
         observable.subscribe(this);
-        cityLoader = OpenWeatherMapLoader.getInstance(getActivity());
+        cityLoader = CityLoader.getInstance(getContext());
     }
 
     private void dataLoad() {
@@ -78,5 +77,8 @@ public class CityListFragment extends Fragment implements Observer {
           cityListAdapter.setCityDataList(cityList);
           cityListAdapter.notifyDataSetChanged();
         }
-    }
+
+        if (eventName.equals(EventsConst.stopApp))
+            cityLoader.stopApp();
+       }
 }

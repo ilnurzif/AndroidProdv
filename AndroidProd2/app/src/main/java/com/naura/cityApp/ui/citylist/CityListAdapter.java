@@ -12,7 +12,6 @@ import android.widget.TextView;
 import com.google.android.material.snackbar.Snackbar;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,7 +24,6 @@ import java.util.List;
 
 public class CityListAdapter extends RecyclerView.Adapter<CityListAdapter.ViewHolder> {
     private List<CityData> cityDataList;
-    private LayoutInflater layoutInflater;
     private Context context;
     private int currentPosition = -1;
     private Boolean cardMode = false;
@@ -34,10 +32,9 @@ public class CityListAdapter extends RecyclerView.Adapter<CityListAdapter.ViewHo
 
     public CityListAdapter(Context context, List<CityData> cityDataList, Boolean cardMode) {
         this.cityDataList = cityDataList;
-        this.layoutInflater = LayoutInflater.from(context);
         this.context = context;
         this.cardMode = cardMode;
-        this.cityLoader = OpenWeatherMapLoader.getInstance(context);
+        this.cityLoader=CityLoader.getInstance(context);
     }
 
     public void setCityDataList(List<CityData> cityDataList) {
@@ -90,10 +87,6 @@ public class CityListAdapter extends RecyclerView.Adapter<CityListAdapter.ViewHo
         cityLoader.setDefaultCityName(cityName);
         observable = Observable.getInstance();
         observable.notify(EventsConst.selectCityLoad, cityName);
-
-        if (activity.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            return;
-        }
     }
 
     private void SetOnClickHolder(@NonNull final ViewHolder holder, final int position) {
@@ -121,7 +114,6 @@ public class CityListAdapter extends RecyclerView.Adapter<CityListAdapter.ViewHo
         TextView cityNameTextView;
         ImageView citySmallImageView;
         ImageView bigImage;
-        CardView cityCardView;
 
         ViewHolder(View view) {
             super(view);

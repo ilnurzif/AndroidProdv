@@ -36,16 +36,4 @@ public class TheatherData implements Serializable {
     public int getTheathericon() {
         return theathericon;
     }
-
-    public void setTemperature(String temperature) {
-        this.temperature = temperature;
-    }
-
-    public void setWeekday(String weekday) {
-        this.date = weekday;
-    }
-
-    public void setTheatherIcon(int theatherIcon) {
-        this.theathericon = theatherIcon;
-    }
 }

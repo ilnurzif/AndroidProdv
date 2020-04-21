@@ -15,7 +15,6 @@ import com.naura.cityApp.observercode.Observer;
 import com.naura.cityApp.ui.BaseActivity;
 import com.naura.cityApp.ui.citydetail.CityData;
 import com.naura.cityApp.ui.citylist.CityLoader;
-import com.naura.cityApp.ui.citylist.OpenWeatherMapLoader;
 import com.naura.myapplication.R;
 
 import androidx.annotation.NonNull;
@@ -25,12 +24,10 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 public class MainActivity extends BaseActivity implements Observer {
     private AppBarConfiguration mAppBarConfiguration;
-    private SearchView searchView;
     private Observable observable;
     private CityLoader cityLoader;
     private androidx.drawerlayout.widget.DrawerLayout mainLayout;
@@ -44,11 +41,22 @@ public class MainActivity extends BaseActivity implements Observer {
         initViews();
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+        observable.notify(EventsConst.stopApp, null);
+        super.onStop();
+    }
+
     private void initViews() {
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        cityLoader = OpenWeatherMapLoader.getInstance(this);
+        cityLoader = CityLoader.getInstance(this);
 
         observable = Observable.getInstance();
         observable.subscribe(this);
@@ -112,11 +120,12 @@ public class MainActivity extends BaseActivity implements Observer {
 
     private void dataLoad(String cityName) {
         CityData cityData = cityLoader.getCity(cityName);
-        Drawable drawable = new BitmapDrawable(cityData.getVerticalImage());
+        Drawable drawable = new BitmapDrawable(this.getResources(),cityData.getVerticalImage());
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT)
             mainLayout.setBackground(drawable);
         else
-            mainLayout.setBackground(new BitmapDrawable(cityData.getHorisontalImage()));
+            mainLayout.setBackground(new BitmapDrawable(this.getResources(), cityData.getHorisontalImage()));
         toolbar.setTitle(cityName);
     }
+
 }

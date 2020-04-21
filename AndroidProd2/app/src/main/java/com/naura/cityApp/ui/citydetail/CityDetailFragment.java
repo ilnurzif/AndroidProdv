@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,12 +15,10 @@ import com.naura.cityApp.observercode.EventsConst;
 import com.naura.cityApp.observercode.Observable;
 import com.naura.cityApp.observercode.Observer;
 import com.naura.cityApp.ui.citylist.CityLoader;
-import com.naura.cityApp.ui.citylist.OpenWeatherMapLoader;
 import com.naura.cityApp.ui.theatherdata.TheatherData;
 import com.naura.cityApp.ui.theatherdata.TheatherWeekAdapter;
 import com.naura.myapplication.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CityDetailFragment extends Fragment implements Observer {
@@ -29,7 +26,6 @@ public class CityDetailFragment extends Fragment implements Observer {
     private TextView temperatureTextView;
     private TextView airhumidityTextView;
     private HumidutyView humidutyView;
-    private List<TheatherData> theatherDays = new ArrayList<>();
     private TheatherWeekAdapter adapter;
     private CityLoader cityLoader;
 
@@ -54,9 +50,8 @@ public class CityDetailFragment extends Fragment implements Observer {
         Observable observable = Observable.getInstance();
         observable.subscribe(this);
 
-        cityLoader = OpenWeatherMapLoader.getInstance(getActivity());
+        cityLoader = CityLoader.getInstance(getActivity());
         cityLoader.startLoad();
-
         observable.notify(EventsConst.selectCityEvent, cityLoader.getDefaultCityName());
     }
 
@@ -73,8 +68,8 @@ public class CityDetailFragment extends Fragment implements Observer {
         temperatureTextView.setText(temperatureNow);
 
         String airhumidity = theatherDays.get(0).getAirhumidity();
-        int airhumidity_int= (int) Math.round(Double. parseDouble(airhumidity));
-        humidutyView.setCurrentHumiduty(airhumidity_int);
+        int airhumidityInt= (int) Math.round(Double. parseDouble(airhumidity));
+        humidutyView.setCurrentHumiduty(airhumidityInt);
     }
 
     @Override
@@ -90,9 +85,10 @@ public class CityDetailFragment extends Fragment implements Observer {
     @Override
     public <T> void update(String eventName, T val) {
         if (eventName.equals(EventsConst.selectCityEvent)) {
-            cityLoader.setDefaultCityName((String) val);
-            cityLoader.startLoad();
-            if (getActivity() == null) return;
+          String str=(String) val;
+          cityLoader.setDefaultCityName(str);
+          cityLoader.startLoad();
+          if (getActivity() == null) return;
         }
         if (eventName.equals(EventsConst.cityLoadFinish)) {
             List<TheatherData> cityTheatherList = (List<TheatherData>) val;

@@ -17,9 +17,6 @@ import com.naura.cityApp.ui.BaseActivity;
 import com.naura.myapplication.R;
 
 public class AppSettingFragment extends Fragment implements Observer {
-    private FloatingActionButton floatingActionButton;
-    private Switch switchHumidity;
-    private Switch switchDescription;
 
     @Nullable
     @Override
@@ -30,15 +27,7 @@ public class AppSettingFragment extends Fragment implements Observer {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        initViews(view);
     }
-
-    private void initViews(View view) {
-        floatingActionButton=view.findViewById(R.id.applySettfloatingActionButton);
-        switchHumidity=view.findViewById(R.id.switchHumidity);
-        switchDescription=view.findViewById(R.id.switchDescription);
-    }
-
 
     @Override
     public <T> void update(String eventName, T val) {
