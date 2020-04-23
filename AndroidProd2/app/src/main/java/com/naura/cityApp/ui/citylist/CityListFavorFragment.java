@@ -15,6 +15,7 @@ import com.naura.cityApp.ui.citydetail.CityData;
 import com.naura.cityApp.observercode.EventsConst;
 import com.naura.cityApp.observercode.Observable;
 import com.naura.cityApp.observercode.Observer;
+import com.naura.cityApp.ui.citylist.model.CityLoader;
 import com.naura.myapplication.R;
 
 import java.util.List;
@@ -50,10 +51,10 @@ public class CityListFavorFragment extends Fragment implements Observer {
     private void initVisual(View view) {
         recyclerView = view.findViewById(R.id.citiesRecyclerView);
         recyclerView.setBackgroundColor(getContext().getResources().getColor(R.color.colorGrid));
-        recyclerView.getLayoutParams().height = 270;
+        recyclerView.getLayoutParams().height = 400;
         Observable observable = Observable.getInstance();
         observable.subscribe(this);
-        this.cityLoader = CityLoader.getInstance(getContext());// OpenWeatherMapLoader.getInstance(getContext());
+        this.cityLoader = CityLoader.getInstance(getContext());
     }
 
     @Override

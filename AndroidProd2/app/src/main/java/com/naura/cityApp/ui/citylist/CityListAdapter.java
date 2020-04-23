@@ -2,7 +2,9 @@ package com.naura.cityApp.ui.citylist;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.res.Configuration;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +20,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.naura.cityApp.observercode.EventsConst;
 import com.naura.cityApp.observercode.Observable;
 import com.naura.cityApp.ui.citydetail.CityData;
+import com.naura.cityApp.ui.citylist.model.CityLoader;
 import com.naura.myapplication.R;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Transformation;
 
 import java.util.List;
 
@@ -29,6 +34,7 @@ public class CityListAdapter extends RecyclerView.Adapter<CityListAdapter.ViewHo
     private Boolean cardMode = false;
     private Observable observable = Observable.getInstance();
     private CityLoader cityLoader;
+
 
     public CityListAdapter(Context context, List<CityData> cityDataList, Boolean cardMode) {
         this.cityDataList = cityDataList;
@@ -64,14 +70,36 @@ public class CityListAdapter extends RecyclerView.Adapter<CityListAdapter.ViewHo
             holder.citySmallImageView.setBackground(context.getResources().getDrawable(R.drawable.like_red));
         } else
             holder.citySmallImageView.setBackground(context.getResources().getDrawable(R.drawable.like_brown));
+        String cityName = holder.cityNameTextView.getText().toString();
+        String imageUrl=cityLoader.getCity(cityName).getUrl();
         if (cardMode) {
-            holder.bigImage.setImageBitmap(cityData.getVerticalImage());
             holder.citySmallImageView.setBackground(context.getResources().getDrawable(R.drawable.like_red));
+            if (imageUrl.trim().equals(""))
+                Picasso.get()
+                        .load(R.drawable.default_image)
+                        .into(holder.bigImage);
+            else
+                Picasso.get()
+                        .load(imageUrl)
+                        .into(holder.bigImage);
         }
-
+        else
+        {
+            if (imageUrl.trim().equals(""))
+                Picasso.get()
+                        .load(R.drawable.default_image)
+                        .transform(new CircleTransformation())
+                        .into(holder.circleSmallImageView);
+            else
+                Picasso.get()
+                        .load(imageUrl)
+                        .transform(new CircleTransformation())
+                        .into(holder.circleSmallImageView);
+     }
         SetOnClickHolder(holder, position);
         repaintView(holder, position);
     }
+
 
     @Override
     public int getItemCount() {
@@ -114,11 +142,17 @@ public class CityListAdapter extends RecyclerView.Adapter<CityListAdapter.ViewHo
         TextView cityNameTextView;
         ImageView citySmallImageView;
         ImageView bigImage;
+        ImageView circleSmallImageView;
 
         ViewHolder(View view) {
             super(view);
             cityNameTextView = view.findViewById(R.id.cityNameTextView);
+            bigImage=view.findViewById(R.id.cityBigImageView);
             citySmallImageView = view.findViewById(R.id.citySmallImageView);
+            if (!cardMode) {
+                circleSmallImageView= view.findViewById(R.id.circleSmallImageView);
+                String str="";
+            }
             citySmallImageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -133,10 +167,6 @@ public class CityListAdapter extends RecyclerView.Adapter<CityListAdapter.ViewHo
                             }).show();
                 }
             });
-
-            if (cardMode) {
-                bigImage = view.findViewById(R.id.cityBigImageView);
-            }
         }
     }
 

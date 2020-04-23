@@ -16,6 +16,7 @@ import com.naura.cityApp.observercode.EventsConst;
 import com.naura.cityApp.observercode.Observable;
 import com.naura.cityApp.observercode.Observer;
 import com.naura.cityApp.ui.citydetail.CityData;
+import com.naura.cityApp.ui.citylist.model.CityLoader;
 import com.naura.myapplication.R;
 
 import java.util.ArrayList;
@@ -77,8 +78,5 @@ public class CityListFragment extends Fragment implements Observer {
           cityListAdapter.setCityDataList(cityList);
           cityListAdapter.notifyDataSetChanged();
         }
-
-        if (eventName.equals(EventsConst.stopApp))
-            cityLoader.stopApp();
        }
 }

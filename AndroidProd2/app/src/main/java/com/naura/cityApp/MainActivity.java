@@ -1,6 +1,8 @@
 package com.naura.cityApp;
 
+import android.app.Activity;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -14,8 +16,11 @@ import com.naura.cityApp.observercode.Observable;
 import com.naura.cityApp.observercode.Observer;
 import com.naura.cityApp.ui.BaseActivity;
 import com.naura.cityApp.ui.citydetail.CityData;
-import com.naura.cityApp.ui.citylist.CityLoader;
+import com.naura.cityApp.ui.citydetail.IloadImage;
+import com.naura.cityApp.ui.citylist.model.CityLoader;
 import com.naura.myapplication.R;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import androidx.annotation.NonNull;
 import androidx.core.view.MenuItemCompat;
@@ -33,6 +38,8 @@ public class MainActivity extends BaseActivity implements Observer {
     private androidx.drawerlayout.widget.DrawerLayout mainLayout;
     private Toolbar toolbar;
     private NavController navController;
+    private Target mTarget;
+    private IloadImage loadBackGround;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +51,7 @@ public class MainActivity extends BaseActivity implements Observer {
     @Override
     protected void onStart() {
         super.onStart();
+        dataLoad(cityLoader.getDefaultCityName());
     }
 
     @Override
@@ -71,6 +79,21 @@ public class MainActivity extends BaseActivity implements Observer {
         navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+        loadBackGround=new loadBackGround();
+        mTarget = new Target() {
+            @Override
+            public void onBitmapLoaded (final Bitmap bitmap, Picasso.LoadedFrom from){
+                Drawable loadedDrawable=new BitmapDrawable(getResources(),bitmap);
+                loadBackGround.loadImage(loadedDrawable);
+            }
+            @Override
+            public void onBitmapFailed(Exception e, Drawable errorDrawable) {
+            }
+            @Override
+            public void onPrepareLoad(Drawable placeHolderDrawable) {
+            }
+        };
     }
 
     @Override
@@ -85,7 +108,6 @@ public class MainActivity extends BaseActivity implements Observer {
                         observable.notify(EventsConst.searchCityEvent, query);
                         return false;
                     }
-
                     @Override
                     public boolean onQueryTextChange(String newText) {
                         return false;
@@ -120,12 +142,26 @@ public class MainActivity extends BaseActivity implements Observer {
 
     private void dataLoad(String cityName) {
         CityData cityData = cityLoader.getCity(cityName);
-        Drawable drawable = new BitmapDrawable(this.getResources(),cityData.getVerticalImage());
-        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT)
-            mainLayout.setBackground(drawable);
-        else
-            mainLayout.setBackground(new BitmapDrawable(this.getResources(), cityData.getHorisontalImage()));
         toolbar.setTitle(cityName);
+        setBackGround(cityData);
     }
 
+    class loadBackGround implements IloadImage {
+      @Override
+       public void loadImage(final Drawable drawable) {
+          mainLayout.setBackground(drawable);
+       }
+    }
+
+    public void setBackGround(final CityData cityData) {
+        String imageUrl=cityData.getUrl();
+                if (imageUrl.trim().equals(""))
+                    Picasso.get()
+                            .load(R.drawable.default_image)
+                            .into(mTarget);
+                else
+                    Picasso.get()
+                            .load(imageUrl)
+                            .into(mTarget);
+    }
 }

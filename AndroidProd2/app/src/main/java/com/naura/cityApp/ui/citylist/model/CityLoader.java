@@ -1,22 +1,11 @@
-package com.naura.cityApp.ui.citylist;
+package com.naura.cityApp.ui.citylist.model;
 
-import android.content.BroadcastReceiver;
-import android.content.ComponentName;
 import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.ServiceConnection;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.IBinder;
 
-import androidx.work.Constraints;
-import androidx.work.NetworkType;
-import androidx.work.OneTimeWorkRequest;
-import androidx.work.WorkManager;
-
-import com.naura.cityApp.observercode.BroadcastEvent;
 import com.naura.cityApp.observercode.EventsConst;
+import com.naura.cityApp.ui.citylist.model.rest.ILoadData;
 import com.naura.cityApp.ui.theatherdata.TheatherData;
 import com.naura.cityApp.ui.citydetail.CityData;
 import com.naura.cityApp.observercode.Observable;
@@ -25,6 +14,7 @@ import com.naura.myapplication.R;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class CityLoader {
     private static CityLoader cityLoader;
     protected Context context;
@@ -32,9 +22,7 @@ public class CityLoader {
     private String defaultCityName = "";
     private String defaultKey = "Казань";
     protected Observable observable;
-    private static LoadDataService.LoadDataServiceBinder loadDataServiceBinder;
-    private boolean isBound;
-    private OneTimeWorkRequest workRequest;
+    ILoadData restLoadData;
 
     public void setDefaultKey(String defaultKey) {
         this.defaultKey = defaultKey;
@@ -55,28 +43,20 @@ public class CityLoader {
                 "Казань",
                 "Казань",
                 kazanTheatherList,
-                ResToBitmap(R.drawable.kazanvertical),
-                ResToBitmap(R.drawable.kazanhorizontal),
-                ResToBitmap(R.drawable.kazan_small),
-                "https://ru.wikipedia.org/wiki/%D0%9A%D0%B0%D0%B7%D0%B0%D0%BD%D1%8C"));
+                "https://ru.wikipedia.org/wiki/%D0%9A%D0%B0%D0%B7%D0%B0%D0%BD%D1%8C",
+                "https://images.unsplash.com/photo-1562429645-6711129c79fc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"));
 
         List<TheatherData> moscowTheatherList = new ArrayList<>();
         cityList.add(new CityData("Москва", "Москва",
                 moscowTheatherList,
-                ResToBitmap(R.drawable.moscowsity),
-                ResToBitmap(R.drawable.moscowhorizont),
-                ResToBitmap(R.drawable.kazan_small),
-                "https://ru.wikipedia.org/wiki/%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D0%B0"));
+                "https://ru.wikipedia.org/wiki/%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D0%B0",
+                "https://images.unsplash.com/photo-1513326738677-b964603b136d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=687&q=80"));
     }
-
 
     protected CityLoader(Context context) {
         this.context = context;
         observable = Observable.getInstance();
-        context.registerReceiver(loadDataFinishedReceiver, new IntentFilter(BroadcastEvent.BROADCAST_ACTION_LOADCITYFINISHED));
-        Intent intent = new Intent(context, LoadDataService.class);
-        intent.putExtra("cityName", defaultKey);
-        context.bindService(intent, loadDataServiceConnection, Context.BIND_AUTO_CREATE);
+        restLoadData=new RestLoadData(new CallParsingData());
     }
 
     protected boolean isCityCached(String cityName) {
@@ -88,8 +68,7 @@ public class CityLoader {
     }
 
     public void startLoad() {
-        if (loadDataServiceBinder != null)
-            loadDataServiceBinder.startLoaddata(defaultCityName);
+        restLoadData.request(getDefaultCityName());
     }
 
     protected Bitmap ResToBitmap(int resid) {
@@ -154,49 +133,9 @@ public class CityLoader {
 
     public void searchCity(String cityName) {
         setDefaultCityName(cityName);
-        loadDataServiceBinder.startLoaddata(cityName);
+        restLoadData.request(getDefaultCityName());
     }
 
-    public void stopApp() {
-        context.unregisterReceiver(loadDataFinishedReceiver);
-        if (isBound) {
-            context.unbindService(loadDataServiceConnection);
-        }
-    }
-
-    private ServiceConnection loadDataServiceConnection = new ServiceConnection() {
-        @Override
-        public void onServiceConnected(ComponentName name, IBinder service) {
-            if (loadDataServiceBinder == null) {
-                loadDataServiceBinder = (LoadDataService.LoadDataServiceBinder) service;
-                loadDataServiceBinder.startLoaddata(getDefaultCityName());
-            }
-            isBound = loadDataServiceBinder != null;
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName name) {
-            isBound = false;
-            loadDataServiceBinder = null;
-        }
-    };
-
-    // Получили уведомление об окончании загрузки данныз из сервиса. Передаем в AsyncTask для парсинга
-    private BroadcastReceiver loadDataFinishedReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String cityLoadEvent = intent.getStringExtra(BroadcastEvent.CITY_LOAD_STATUS);
-            if (cityLoadEvent.equals(BroadcastEvent.CITY_LOAD_STATUS_OK))
-                parsingData();
-        }
-    };
-
-    // Запускаем AsyncTask для парсинга данных
-    private void parsingData() {
-        new ParsingDataAsyncTask().execute(new CallParsingData());
-    }
-
-    // Для возврата значений из ParsingAsyncDataTask
     class CallParsingData implements ICallData {
         @Override
         public void execute(List<TheatherData> cityTheatherList, String cityName) {
@@ -206,10 +145,8 @@ public class CityLoader {
             if (!isCityCached(cityName)) {
                 CityData cityData = new CityData(cityName, cityName,
                         cityTheatherList,
-                        ResToBitmap(R.drawable.default_image),
-                        ResToBitmap(R.drawable.default_image),
-                        ResToBitmap(R.drawable.kazan_small),
-                        "https://ru.wikipedia.org/wiki/%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D0%B0");
+                        "https://ru.wikipedia.org/wiki/%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D0%B0",
+                        "");
                 cityData.setFavoriteCity(false);
                 cityList.add(cityData);
                 observable.notify(EventsConst.addNewCity, cityData);
@@ -219,11 +156,8 @@ public class CityLoader {
         }
 
         @Override
-        public String getLoadedData() {
-            String data = null;
-            if (loadDataServiceBinder != null)
-                data = loadDataServiceBinder.getLoadedData();
-            return data;
+        public String errorTextReturn(String errMsg) {
+            return null;
         }
     }
 }

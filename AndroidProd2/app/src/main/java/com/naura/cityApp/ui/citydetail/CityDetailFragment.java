@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.naura.cityApp.observercode.EventsConst;
 import com.naura.cityApp.observercode.Observable;
 import com.naura.cityApp.observercode.Observer;
-import com.naura.cityApp.ui.citylist.CityLoader;
+import com.naura.cityApp.ui.citylist.model.CityLoader;
 import com.naura.cityApp.ui.theatherdata.TheatherData;
 import com.naura.cityApp.ui.theatherdata.TheatherWeekAdapter;
 import com.naura.myapplication.R;
