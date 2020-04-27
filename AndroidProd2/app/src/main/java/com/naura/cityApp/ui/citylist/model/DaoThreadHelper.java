@@ -17,7 +17,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 // Класс для асинхронного взаимодействия с Room
-
 public class DaoThreadHelper {
     public static List<CityData> getCityAll() {
         ExecutorService es = Executors.newSingleThreadExecutor();

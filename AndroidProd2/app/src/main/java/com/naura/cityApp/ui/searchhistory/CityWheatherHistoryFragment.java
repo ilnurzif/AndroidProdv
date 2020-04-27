@@ -48,7 +48,6 @@ public class CityWheatherHistoryFragment extends Fragment implements Observer {
         citySearchHistoryRW.setAdapter(historyListAdapter);
     }
 
-
     @Override
     public <T> void update(String eventName, T val) {
 

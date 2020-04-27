@@ -3,7 +3,6 @@ package com.naura.cityApp.ui.citylist.model;
 import com.naura.cityApp.ui.citydetail.CityData;
 import com.naura.cityApp.ui.citylist.model.database.CityDb;
 import com.naura.cityApp.ui.citylist.model.database.CityWeatherDb;
-import com.naura.cityApp.ui.citylist.model.rest.City;
 import com.naura.cityApp.ui.theatherdata.TheatherData;
 
 import java.util.ArrayList;

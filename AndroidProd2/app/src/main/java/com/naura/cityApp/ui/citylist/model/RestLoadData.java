@@ -54,14 +54,11 @@ public class RestLoadData implements ILoadData {
                             cityTheatherList.add(respToTheatherData(weatherAddParams[0]));
                             cityTheatherList.add(respToTheatherData(weatherAddParams[6]));
                             cityTheatherList.add(respToTheatherData(weatherAddParams[13]));
-                            callData.execute(cityTheatherList, cityName,true);
+                            callData.execute(cityTheatherList, cityName, true);
                             Log.d("Debug", "FINISH");
+                        } else {
+                            // Ошибка
                         }
-                        else
-                        {
-                            // Ошибка Toast.makeText(, "", Toast.LENGTH_SHORT).show();
-                        }
-
                     }
 
                     @Override
