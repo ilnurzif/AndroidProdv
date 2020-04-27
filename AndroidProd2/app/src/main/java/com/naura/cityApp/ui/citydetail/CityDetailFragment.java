@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.naura.cityApp.observercode.EventsConst;
 import com.naura.cityApp.observercode.Observable;
 import com.naura.cityApp.observercode.Observer;
@@ -28,6 +29,7 @@ public class CityDetailFragment extends Fragment implements Observer {
     private HumidutyView humidutyView;
     private TheatherWeekAdapter adapter;
     private CityLoader cityLoader;
+    private FloatingActionButton historyOpenFAB;
 
     @Nullable
     @Override
@@ -47,12 +49,20 @@ public class CityDetailFragment extends Fragment implements Observer {
         airhumidityTextView = view.findViewById(R.id.airhumiditytextView);
         humidutyView=view.findViewById(R.id.humidutyView);
 
-        Observable observable = Observable.getInstance();
+        final Observable observable = Observable.getInstance();
         observable.subscribe(this);
 
         cityLoader = CityLoader.getInstance(getActivity());
         cityLoader.startLoad();
         observable.notify(EventsConst.selectCityEvent, cityLoader.getDefaultCityName());
+
+        historyOpenFAB=view.findViewById(R.id.historyOpenFAB);
+        historyOpenFAB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                observable.notify(EventsConst.openCityHistory,null);
+            }
+        });
     }
 
     private void dataLoad(String cityName, List<TheatherData> theatherDays) {
@@ -64,11 +74,9 @@ public class CityDetailFragment extends Fragment implements Observer {
             adapter.notifyDataSetChanged();
         }
 
-        String temperatureNow = theatherDays.get(0).getTemperature();
+        String temperatureNow = theatherDays.get(0).getFormatedTemperature();
         temperatureTextView.setText(temperatureNow);
-
-        String airhumidity = theatherDays.get(0).getAirhumidity();
-        int airhumidityInt= (int) Math.round(Double. parseDouble(airhumidity));
+        int airhumidityInt=theatherDays.get(0).getAirhumidity();
         humidutyView.setCurrentHumiduty(airhumidityInt);
     }
 

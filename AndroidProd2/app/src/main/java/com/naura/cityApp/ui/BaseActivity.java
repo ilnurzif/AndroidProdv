@@ -5,7 +5,10 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.naura.cityApp.App;
 import com.naura.cityApp.observercode.Observer;
+import com.naura.cityApp.ui.citylist.model.database.CitySource;
+import com.naura.cityApp.ui.citylist.model.database.dao.CityDao;
 import com.naura.myapplication.R;
 
 
@@ -15,7 +18,7 @@ public class BaseActivity extends AppCompatActivity implements Observer {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+      super.onCreate(savedInstanceState);
        setThemeD();
     }
 

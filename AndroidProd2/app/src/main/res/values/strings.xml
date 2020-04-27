@@ -51,4 +51,6 @@
     <string name="ok_msg">Понятно</string>
     <string name="code200_error">Ошибка запроса (код 200)</string>
     <string name="server_no_answer">Сервер не отвечает или неверный запрос</string>
+    <string name="searchhistory">История просмотров</string>
+    <string name="KazanCity">Казань</string>
 </resources>

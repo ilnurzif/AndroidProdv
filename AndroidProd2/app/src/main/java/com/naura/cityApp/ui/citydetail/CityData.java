@@ -22,6 +22,7 @@ public class CityData {
     private String infoUrl;
     private boolean favoriteCity = true;
     private String imageUrl;
+    private long ID;
 
     public boolean isFavoriteCity() {
         return favoriteCity;
@@ -42,6 +43,17 @@ public class CityData {
         this.theatherDays = theatherDays;
         this.infoUrl = infoUrl;
         this.imageUrl = imageUrl;
+    }
+
+    public CityData(String key,
+                    String name,
+                    List<TheatherData> theatherDays) {
+
+        this.key = key;
+        this.name = name;
+        this.theatherDays = theatherDays;
+        this.infoUrl = "";
+        this.imageUrl = "";
     }
 
     public String getKey() {
@@ -92,7 +104,19 @@ public class CityData {
         context.startActivity(browserIntent);
     }
 
-    public String getUrl() {
+    public String getImageUrl() {
         return imageUrl;
+    }
+
+    public String getInfoUrl() {
+        return infoUrl;
+    }
+
+    public void setID(long id) {
+        this.ID=id;
+    }
+
+    public long getID() {
+        return ID;
     }
 }

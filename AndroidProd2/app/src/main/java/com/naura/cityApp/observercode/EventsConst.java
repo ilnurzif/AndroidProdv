@@ -8,4 +8,5 @@ public class EventsConst {
     public static String searchCityEvent="searchCityEvent";
     public static String addNewCity="addNewCity";
     public static String stopApp="stopApp";
+    public static String openCityHistory="openCityHistory";
 }

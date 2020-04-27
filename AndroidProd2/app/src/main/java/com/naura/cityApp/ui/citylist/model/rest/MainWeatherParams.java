@@ -3,11 +3,11 @@ package com.naura.cityApp.ui.citylist.model.rest;
 import com.google.gson.annotations.SerializedName;
 
 public class MainWeatherParams {
- @SerializedName("temp")
+    @SerializedName("temp")
     private float temperature;
- @SerializedName("humidity")
+    @SerializedName("humidity")
     private int humidity;
- @SerializedName("pressure")
+    @SerializedName("pressure")
     private int pressure;
 
     public int getHumidity() {

@@ -1,7 +1,5 @@
 package com.naura.cityApp;
 
-import android.app.Activity;
-import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -94,6 +92,7 @@ public class MainActivity extends BaseActivity implements Observer {
             public void onPrepareLoad(Drawable placeHolderDrawable) {
             }
         };
+
     }
 
     @Override
@@ -138,6 +137,12 @@ public class MainActivity extends BaseActivity implements Observer {
             dataLoad((String) val);
             navController.navigate(R.id.city_detail);
         }
+
+        if (eventName.equals(EventsConst.openCityHistory)) {
+            navController.navigate(R.id.city_search_history);
+            String title=cityLoader.getDefaultCityName()+" - история просмотров";
+            toolbar.setTitle(title);
+        }
     }
 
     private void dataLoad(String cityName) {
@@ -154,7 +159,7 @@ public class MainActivity extends BaseActivity implements Observer {
     }
 
     public void setBackGround(final CityData cityData) {
-        String imageUrl=cityData.getUrl();
+        String imageUrl=cityData.getImageUrl();
                 if (imageUrl.trim().equals(""))
                     Picasso.get()
                             .load(R.drawable.default_image)

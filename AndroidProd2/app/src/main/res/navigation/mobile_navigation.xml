@@ -35,4 +35,11 @@
         android:name="com.naura.cityApp.ui.setting.AppSettingFragment"
         android:label="@string/title_setting"
         tools:layout="@layout/app_settings" />
+
+    <fragment
+        android:id="@+id/city_search_history"
+        android:name="com.naura.cityApp.ui.searchhistory.CityWheatherHistoryFragment"
+        android:label="@string/searchhistory"
+        tools:layout="@layout/city_search_history" />
+
 </navigation>

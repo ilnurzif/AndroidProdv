@@ -19,16 +19,12 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import com.naura.myapplication.R;
-
-import java.util.Locale;
-
 import android.util.Log;
 
 public class RestLoadData implements ILoadData {
     private OpenWeather openWeather;
     private static String baseUrl = "https://api.openweathermap.org";
-    private int cnt = 12;
+    private int cnt = 16;
     private String lang = "ru";
     private String keyApi = "1d208cf3fc4085d8d8ba431d9d470fb3";
     private String units = "metric";
@@ -53,12 +49,19 @@ public class RestLoadData implements ILoadData {
                     @Override
                     public void onResponse(Call<WeatherRequest> call, Response<WeatherRequest> response) {
                         List<TheatherData> cityTheatherList = new ArrayList<>();
-                        WeatherAddParams[] weatherAddParams = response.body().getWeatherAddParams();
-                        cityTheatherList.add(respToTheatherData(weatherAddParams[0]));
-                        cityTheatherList.add(respToTheatherData(weatherAddParams[6]));
-                        cityTheatherList.add(respToTheatherData(weatherAddParams[11]));
-                        callData.execute(cityTheatherList, cityName);
-                        Log.d("Debug", "FINISH");
+                        if (response.body() != null && response.isSuccessful()) {
+                            WeatherAddParams[] weatherAddParams = response.body().getWeatherAddParams();
+                            cityTheatherList.add(respToTheatherData(weatherAddParams[0]));
+                            cityTheatherList.add(respToTheatherData(weatherAddParams[6]));
+                            cityTheatherList.add(respToTheatherData(weatherAddParams[13]));
+                            callData.execute(cityTheatherList, cityName,true);
+                            Log.d("Debug", "FINISH");
+                        }
+                        else
+                        {
+                            // Ошибка Toast.makeText(, "", Toast.LENGTH_SHORT).show();
+                        }
+
                     }
 
                     @Override
@@ -77,21 +80,19 @@ public class RestLoadData implements ILoadData {
             Weather[] weather = weatherAddParams.getWeather();
             String description = weather[0].getDescription();
 
-            String temperStr = String.format(Locale.getDefault(), "%.0f", temper) + "\u2103";
-            ;
-            String humidityStr = Integer.toString(humidity);
-            String pressureStr = Integer.toString(pressure);
-
-            String dateS = dt_txt;
-            SimpleDateFormat dateFormat = new SimpleDateFormat();
-            dateFormat.applyPattern("yyyy-MM-dd HH:mm:ss");
-            Date tempDate = dateFormat.parse(dateS);
-            SimpleDateFormat resDate = new SimpleDateFormat("E  dd.MM");
-            return new TheatherData(temperStr, pressureStr, humidityStr, resDate.format(tempDate), description, R.drawable.kweather);
+            Date tempDate = getFormatedDate(dt_txt);
+            return new TheatherData(temper, pressure, humidity, tempDate, description);
         } catch (ParseException e) {
             e.printStackTrace();
         }
         return null;
+    }
+
+    private Date getFormatedDate(String dt_txt) throws ParseException {
+        String dateS = dt_txt;
+        SimpleDateFormat dateFormat = new SimpleDateFormat();
+        dateFormat.applyPattern("yyyy-MM-dd HH:mm:ss");
+        return dateFormat.parse(dateS);
     }
 
 }

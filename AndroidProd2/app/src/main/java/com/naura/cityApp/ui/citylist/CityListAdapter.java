@@ -2,9 +2,6 @@ package com.naura.cityApp.ui.citylist;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +20,6 @@ import com.naura.cityApp.ui.citydetail.CityData;
 import com.naura.cityApp.ui.citylist.model.CityLoader;
 import com.naura.myapplication.R;
 import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Transformation;
 
 import java.util.List;
 
@@ -71,7 +67,7 @@ public class CityListAdapter extends RecyclerView.Adapter<CityListAdapter.ViewHo
         } else
             holder.citySmallImageView.setBackground(context.getResources().getDrawable(R.drawable.like_brown));
         String cityName = holder.cityNameTextView.getText().toString();
-        String imageUrl=cityLoader.getCity(cityName).getUrl();
+        String imageUrl=cityLoader.getCity(cityName).getImageUrl();
         if (cardMode) {
             holder.citySmallImageView.setBackground(context.getResources().getDrawable(R.drawable.like_red));
             if (imageUrl.trim().equals(""))

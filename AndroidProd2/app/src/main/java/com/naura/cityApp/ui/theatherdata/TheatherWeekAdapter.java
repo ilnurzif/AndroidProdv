@@ -38,9 +38,9 @@ public class TheatherWeekAdapter extends RecyclerView.Adapter<TheatherWeekAdapte
     @Override
     public void onBindViewHolder(@NonNull TheatherWeekAdapter.ViewHolder holder, int position) {
         TheatherData theatherDay = theatherDays.get(position);
-        holder.weatherView.setImageResource(theatherDay.getTheathericon());
-        holder.temperatureView.setText(theatherDay.getTemperature());
-        holder.weekdayView.setText(theatherDay.getDay());
+//        holder.weatherView.setImageResource(theatherDay.getTheathericon());
+        holder.temperatureView.setText(theatherDay.getFormatedTemperature());
+        holder.weekdayView.setText(theatherDay.getDateStr());
         holder.descriptionView.setText(theatherDay.getDescription());
     }
 

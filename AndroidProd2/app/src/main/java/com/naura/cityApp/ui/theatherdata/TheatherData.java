@@ -1,15 +1,19 @@
 package com.naura.cityApp.ui.theatherdata;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 public class TheatherData implements Serializable {
-    private String temperature;
-    private String date;
-    private String airhumidity;
-    private int theathericon;
+    private float temperature;
+    private Date date;
+    private int airhumidity;
+    private int pressure;
     private String description;
+    private long ID;
 
-    public String getTemperature() {
+    public float getTemperature() {
         return temperature;
     }
 
@@ -17,23 +21,52 @@ public class TheatherData implements Serializable {
         return description;
     }
 
-    public String getAirhumidity() {
+    public int getAirhumidity() {
         return airhumidity;
     }
 
-    public TheatherData(String temperature, String pressure, String airhumidity, String date, String description, int theathericon) {
-        this.temperature = temperature;
-        this.date = date;
-        this.theathericon = theathericon;
-        this.airhumidity = airhumidity;
-        this.description=description;
+    public int getPressure() {
+        return pressure;
     }
 
-    public String getDay() {
+    public TheatherData(float temperature, int pressure, int airhumidity, Date date, String description) {
+        this.temperature = temperature;
+        this.date = date;
+        this.airhumidity = airhumidity;
+        this.description=description;
+        this.pressure=pressure;
+    }
+
+
+    public Date getDay() {
         return date;
     }
 
-    public int getTheathericon() {
-        return theathericon;
+    public String getDateStr() {
+        SimpleDateFormat resDate = new SimpleDateFormat("E  dd.MM");
+        return resDate.format(date);
+    }
+
+    public String getFormatedTemperature() {
+        String formTemp=String.format(Locale.getDefault(), "%.0f", temperature) + "\u2103";
+        return formTemp;
+    }
+
+    public String getFormatedHumitity() {
+       String fornHum= Integer.toString(airhumidity)+"%";
+       return fornHum;
+    }
+
+    public String getFormatedPressure() {
+        String formPress= Integer.toString(pressure)+"hPa";
+        return formPress;
+    }
+
+    public void setID(long id) {
+        this.ID=id;
+    }
+
+    public long getID() {
+        return ID;
     }
 }

@@ -1,18 +1,25 @@
 package com.naura.cityApp.ui.citylist.model;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-
+import com.naura.cityApp.App;
 import com.naura.cityApp.observercode.EventsConst;
+import com.naura.cityApp.ui.citylist.model.database.CityDb;
+import com.naura.cityApp.ui.citylist.model.database.CityWeatherDb;
+import com.naura.cityApp.ui.citylist.model.database.DBLoadDataAsyncTask;
+import com.naura.cityApp.ui.citylist.model.database.dao.CityDao;
 import com.naura.cityApp.ui.citylist.model.rest.ILoadData;
 import com.naura.cityApp.ui.theatherdata.TheatherData;
 import com.naura.cityApp.ui.citydetail.CityData;
 import com.naura.cityApp.observercode.Observable;
-import com.naura.myapplication.R;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 
 public class CityLoader {
@@ -22,7 +29,8 @@ public class CityLoader {
     private String defaultCityName = "";
     private String defaultKey = "Казань";
     protected Observable observable;
-    ILoadData restLoadData;
+    private ILoadData restLoadData; // для загруки погоды с сервера
+    private SharedPrefProp sharedPrefProp=new SharedPrefProp();
 
     public void setDefaultKey(String defaultKey) {
         this.defaultKey = defaultKey;
@@ -35,28 +43,48 @@ public class CityLoader {
         return cityLoader;
     }
 
+    public static CityLoader getInstance() {
+        return cityLoader;
+    }
+
+
     private void loaddata() {
-        cityList = new ArrayList<>();
+        long cityCount = DaoThreadHelper.getCityCount();
+        // если таблица не создавалась заполняем базовыми городами
+        if (cityCount == 0) {
+            List<TheatherData> kazanTheatherList = new ArrayList<>();
+            CityData cityDatak = new CityData(
+                    "Казань",
+                    "Казань",
+                    kazanTheatherList,
+                    "https://ru.wikipedia.org/wiki/%D0%9A%D0%B0%D0%B7%D0%B0%D0%BD%D1%8C",
+                    "https://images.unsplash.com/photo-1562429645-6711129c79fc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60");
 
-        List<TheatherData> kazanTheatherList = new ArrayList<>();
-        cityList.add(new CityData(
-                "Казань",
-                "Казань",
-                kazanTheatherList,
-                "https://ru.wikipedia.org/wiki/%D0%9A%D0%B0%D0%B7%D0%B0%D0%BD%D1%8C",
-                "https://images.unsplash.com/photo-1562429645-6711129c79fc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"));
+            long id= DaoThreadHelper.getCityID(cityDatak);
+            cityDatak.setID(id);
 
-        List<TheatherData> moscowTheatherList = new ArrayList<>();
-        cityList.add(new CityData("Москва", "Москва",
-                moscowTheatherList,
-                "https://ru.wikipedia.org/wiki/%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D0%B0",
-                "https://images.unsplash.com/photo-1513326738677-b964603b136d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=687&q=80"));
+            List<TheatherData> moscowTheatherList = new ArrayList<>();
+            CityData cityDatam = new CityData("Москва", "Москва",
+                    moscowTheatherList,
+                    "https://ru.wikipedia.org/wiki/%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D0%B0",
+                    "https://images.unsplash.com/photo-1513326738677-b964603b136d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=687&q=80");
+
+            id= DaoThreadHelper.getCityID(cityDatam);
+            cityDatak.setID(id);
+        }
+
+        cityList=DaoThreadHelper.getCityAll();
     }
 
     protected CityLoader(Context context) {
         this.context = context;
         observable = Observable.getInstance();
-        restLoadData=new RestLoadData(new CallParsingData());
+        //cityDao = App.getInstance().getCityDao();
+        CallParsingData callParsingData = new CallParsingData();
+        restLoadData = new RestLoadData(callParsingData);
+        new DBLoadDataAsyncTask(this).execute(callParsingData);
+      //  citySource = new CitySource(cityDao);
+        loaddata();
     }
 
     protected boolean isCityCached(String cityName) {
@@ -67,12 +95,36 @@ public class CityLoader {
         return false;
     }
 
-    public void startLoad() {
-        restLoadData.request(getDefaultCityName());
+
+    private List<TheatherData> getTheatherDataList(final String cityName) {
+        ExecutorService es = Executors.newSingleThreadExecutor();
+        Future result = es.submit(new Callable() {
+            @Override
+            public List<TheatherData> call() throws Exception {
+                CityDao cityDao = App.getInstance().getCityDao();
+                List<CityWeatherDb> cityWeatherDbList = cityDao.getCityWeatherWithByName(cityName);
+                List<TheatherData> theatherDataList = CityDataToCityDbAdapter.convert(cityWeatherDbList);
+                return theatherDataList;
+            }
+        });
+        try {
+            return (List<TheatherData>) result.get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
-    protected Bitmap ResToBitmap(int resid) {
-        return BitmapFactory.decodeResource(context.getResources(), resid);
+    public List<TheatherData> getAllWeatherWithCity(String cityName) {
+        List<TheatherData> theatherDataList =  getTheatherDataList(cityName);
+        return theatherDataList;
+    }
+
+    public void startLoad() {
+       new DBLoadDataAsyncTask(this).execute(new CallParsingData()); // загружаем ранее сохраненные данные о погоде
+       restLoadData.request(getDefaultCityName()); // и если сервер доступен обновляем
     }
 
     protected CityData findCachedCity(String cityname) {
@@ -118,13 +170,18 @@ public class CityLoader {
     }
 
     public String getDefaultCityName() {
-        if (defaultCityName.equals(""))
-            defaultCityName = "Казань";
-        return defaultCityName;
+        try {
+            if (defaultCityName.equals(""))
+                defaultCityName = sharedPrefProp.loadDefaultCity(context);
+            return defaultCityName;
+        } catch (Exception e) {
+        }
+        return "Казань";
     }
 
     public void setDefaultCityName(String cityName) {
         defaultCityName = cityName;
+        sharedPrefProp.saveDefaultCity(context, defaultCityName);
         for (CityData cityData : cityList) {
             if (cityData.getName().equals(cityName))
                 defaultKey = cityData.getKey();
@@ -138,16 +195,20 @@ public class CityLoader {
 
     class CallParsingData implements ICallData {
         @Override
-        public void execute(List<TheatherData> cityTheatherList, String cityName) {
+        public void execute(List<TheatherData> cityTheatherList, String cityName, boolean saveData) {
             setDefaultKey(cityName);
             Observable observable = Observable.getInstance();
 
+            CityData cityData = new CityData(cityName, cityName,
+                    cityTheatherList);
+            cityData.setFavoriteCity(false);
+
+            if (saveData) {
+              boolean cityCached=isCityCached(cityName);
+              int res=DaoThreadHelper.insertDb(cityName, cityData, cityTheatherList, cityCached);
+            }
+
             if (!isCityCached(cityName)) {
-                CityData cityData = new CityData(cityName, cityName,
-                        cityTheatherList,
-                        "https://ru.wikipedia.org/wiki/%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D0%B0",
-                        "");
-                cityData.setFavoriteCity(false);
                 cityList.add(cityData);
                 observable.notify(EventsConst.addNewCity, cityData);
             } else {
