@@ -1,0 +1,56 @@
+<resources>
+    <string name="app_name">Theather app</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
+
+    <string name="home_second">Home Second</string>
+    <string name="airhumidity">airhumidity</string>
+    <string name="theather">theather</string>
+    <string name="weekforecast">weekforecast</string>
+    <string name="moscow">moscow</string>
+    <string name="Monday">mn</string>
+    <string name="Tuesday">tu</string>
+    <string name="Wednesday">wed</string>
+    <string name="Thursday">thu</string>
+    <string name="Saturday">sat</string>
+    <string name="Sunday">sun</string>
+    <string name="entercity">enter city name</string>
+    <string name="searchviewsettingtitle">search view setting</string>
+    <string name="windspeedtext">wind speed</string>
+    <string name="pressure">pressure</string>
+    <string name="findcity">findcity</string>
+    <string name="appsettigstitle">App settings</string>
+    <string name="applang">App lang</string>
+    <string name="themetitle">Dark theme</string>
+    <string name="title_activity_city_list">Select city</string>
+    <string name="Moscow">Moscow</string>
+    <string name="Kazan">Kazan</string>
+    <string name="favorite_city_title">Favorite city</string>
+    <string name="all_city_title">All city</string>
+    <string name="Yes_const">Да</string>
+    <string name="city_add_question">City will do added fovorite category</string>
+    <string name="myname">Ilnur Zagyrtdinov  ilnurzif@gmail.com +79256696944</string>
+    <string name="title_setting">App settings</string>
+    <string name="title_about">About</string>
+    <string name="app_theme">Тема приложения</string>
+    <string name="darkThemeTitle">Темная тема</string>
+    <string name="appThemeTitle">Светлая тема</string>
+    <string name="search">search_title</string>
+    <string name="airhumidityVisible">Отображать влажность</string>
+    <string name="descriptionVisible">Отображать описание</string>
+    <string name="warning">Внимание</string>
+    <string name="city_not_found_msg">Город не найден</string>
+    <string name="ok_msg">Понятно</string>
+    <string name="code200_error">Ошибка запроса (код 200)</string>
+    <string name="server_no_answer">Сервер не отвечает или неверный запрос</string>
+    <string name="searchhistory">История просмотров</string>
+    <string name="KazanCity">Казань</string>
+</resources>
