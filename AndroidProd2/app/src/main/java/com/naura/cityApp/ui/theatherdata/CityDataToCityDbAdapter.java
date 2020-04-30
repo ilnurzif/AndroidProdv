@@ -1,4 +1,4 @@
-package com.naura.cityApp.ui.citylist.model;
+package com.naura.cityApp.ui.theatherdata;
 
 import com.naura.cityApp.ui.citydetail.CityData;
 import com.naura.cityApp.ui.citylist.model.database.CityDb;

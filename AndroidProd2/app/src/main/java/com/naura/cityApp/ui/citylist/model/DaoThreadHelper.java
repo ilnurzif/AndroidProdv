@@ -4,7 +4,8 @@ import com.naura.cityApp.App;
 import com.naura.cityApp.ui.citydetail.CityData;
 import com.naura.cityApp.ui.citylist.model.database.CityDb;
 import com.naura.cityApp.ui.citylist.model.database.CityWeatherDb;
-import com.naura.cityApp.ui.citylist.model.database.dao.CityDao;
+import com.naura.cityApp.database.basecode.dao.CityDao;
+import com.naura.cityApp.ui.theatherdata.CityDataToCityDbAdapter;
 import com.naura.cityApp.ui.theatherdata.TheatherData;
 
 import java.util.ArrayList;

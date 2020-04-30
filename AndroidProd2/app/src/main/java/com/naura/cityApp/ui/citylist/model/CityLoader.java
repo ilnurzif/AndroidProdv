@@ -4,17 +4,16 @@ import android.content.Context;
 
 import com.naura.cityApp.App;
 import com.naura.cityApp.observercode.EventsConst;
-import com.naura.cityApp.ui.citylist.model.database.CityDb;
 import com.naura.cityApp.ui.citylist.model.database.CityWeatherDb;
-import com.naura.cityApp.ui.citylist.model.database.DBLoadDataAsyncTask;
-import com.naura.cityApp.ui.citylist.model.database.dao.CityDao;
+import com.naura.cityApp.database.basecode.DBLoadDataAsyncTask;
+import com.naura.cityApp.database.basecode.dao.CityDao;
 import com.naura.cityApp.ui.citylist.model.rest.ILoadData;
+import com.naura.cityApp.ui.theatherdata.CityDataToCityDbAdapter;
 import com.naura.cityApp.ui.theatherdata.TheatherData;
 import com.naura.cityApp.ui.citydetail.CityData;
 import com.naura.cityApp.observercode.Observable;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;

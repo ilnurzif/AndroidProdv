@@ -3,12 +3,19 @@ package com.naura.cityApp;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.Menu;
 import android.widget.SearchView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
+import com.naura.cityApp.broadcast.BroadcastManager;
 import com.naura.cityApp.observercode.EventsConst;
 import com.naura.cityApp.observercode.Observable;
 import com.naura.cityApp.observercode.Observer;
@@ -21,6 +28,7 @@ import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.core.view.MenuItemCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -38,13 +46,16 @@ public class MainActivity extends BaseActivity implements Observer {
     private NavController navController;
     private Target mTarget;
     private IloadImage loadBackGround;
+    private BroadcastManager broadcastManager;
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initViews();
     }
+
 
     @Override
     protected void onStart() {
@@ -58,6 +69,7 @@ public class MainActivity extends BaseActivity implements Observer {
         super.onStop();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private void initViews() {
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -92,8 +104,10 @@ public class MainActivity extends BaseActivity implements Observer {
             public void onPrepareLoad(Drawable placeHolderDrawable) {
             }
         };
-
+        broadcastManager = new BroadcastManager(this);
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

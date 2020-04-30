@@ -53,4 +53,6 @@
     <string name="server_no_answer">Сервер не отвечает или неверный запрос</string>
     <string name="searchhistory">История просмотров</string>
     <string name="KazanCity">Казань</string>
+    <string name="broadcasteventmsg">Внимание!</string>
+    <string name="airplanemodeenablemsg">Режим самолета</string>
 </resources>

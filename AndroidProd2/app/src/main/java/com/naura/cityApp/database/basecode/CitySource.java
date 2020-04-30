@@ -1,6 +1,6 @@
-package com.naura.cityApp.ui.citylist.model.database;
+package com.naura.cityApp.database.basecode;
 
-import com.naura.cityApp.ui.citylist.model.database.dao.CityDao;
+import com.naura.cityApp.database.basecode.dao.CityDao;
 
 public class CitySource {
     private CityDao cityDao;

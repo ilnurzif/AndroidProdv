@@ -4,8 +4,8 @@ import android.app.Application;
 
 import androidx.room.Room;
 
-import com.naura.cityApp.ui.citylist.model.database.CitysDatabase;
-import com.naura.cityApp.ui.citylist.model.database.dao.CityDao;
+import com.naura.cityApp.database.basecode.CitysDatabase;
+import com.naura.cityApp.database.basecode.dao.CityDao;
 
 
 public class App extends Application {

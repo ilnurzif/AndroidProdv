@@ -1,4 +1,4 @@
-package com.naura.cityApp.ui.citylist.model.database.dao;
+package com.naura.cityApp.database.basecode.dao;
 
 import androidx.room.Dao;
 import androidx.room.Delete;
