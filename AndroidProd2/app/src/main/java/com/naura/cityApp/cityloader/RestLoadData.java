@@ -1,10 +1,10 @@
-package com.naura.cityApp.ui.citylist.model;
+package com.naura.cityApp.cityloader;
 
-import com.naura.cityApp.ui.citylist.model.rest.ILoadData;
-import com.naura.cityApp.ui.citylist.model.rest.OpenWeather;
-import com.naura.cityApp.ui.citylist.model.rest.Weather;
-import com.naura.cityApp.ui.citylist.model.rest.WeatherAddParams;
-import com.naura.cityApp.ui.citylist.model.rest.WeatherRequest;
+import com.naura.cityApp.cityloader.rest.ILoadData;
+import com.naura.cityApp.cityloader.rest.OpenWeather;
+import com.naura.cityApp.cityloader.rest.Weather;
+import com.naura.cityApp.cityloader.rest.WeatherAddParams;
+import com.naura.cityApp.cityloader.rest.WeatherRequest;
 import com.naura.cityApp.ui.theatherdata.TheatherData;
 
 import java.text.ParseException;
@@ -55,6 +55,33 @@ public class RestLoadData implements ILoadData {
                             cityTheatherList.add(respToTheatherData(weatherAddParams[6]));
                             cityTheatherList.add(respToTheatherData(weatherAddParams[13]));
                             callData.execute(cityTheatherList, cityName, true);
+                            Log.d("Debug", "FINISH");
+                        } else {
+                            Log.d("Debug", "Error");
+                            // Ошибка
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<WeatherRequest> call, Throwable t) {
+                        callData.errorTextReturn(t.getMessage());
+                    }
+                });
+    }
+
+    public void request(final double latitude, final double longitude) {
+        openWeather.loadWeather(cnt, lang, keyApi, units, latitude, longitude)
+                .enqueue(new Callback<WeatherRequest>() {
+                    @Override
+                    public void onResponse(Call<WeatherRequest> call, Response<WeatherRequest> response) {
+                        List<TheatherData> cityTheatherList = new ArrayList<>();
+                        if (response.body() != null && response.isSuccessful()) {
+                            WeatherAddParams[] weatherAddParams = response.body().getWeatherAddParams();
+                            cityTheatherList.add(respToTheatherData(weatherAddParams[0]));
+                            cityTheatherList.add(respToTheatherData(weatherAddParams[6]));
+                            cityTheatherList.add(respToTheatherData(weatherAddParams[13]));
+                            String cityName = response.body().getCity().getCityName();
+                            callData.execute(cityTheatherList, cityName);
                             Log.d("Debug", "FINISH");
                         } else {
                             // Ошибка

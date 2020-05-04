@@ -1,4 +1,4 @@
-package com.naura.cityApp.ui.citylist.model.rest;
+package com.naura.cityApp.cityloader.rest;
 
 import com.google.gson.annotations.SerializedName;
 

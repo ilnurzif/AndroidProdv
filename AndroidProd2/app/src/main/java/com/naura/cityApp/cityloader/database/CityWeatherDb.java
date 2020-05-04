@@ -1,4 +1,4 @@
-package com.naura.cityApp.ui.citylist.model.database;
+package com.naura.cityApp.cityloader.database;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;

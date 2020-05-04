@@ -18,7 +18,6 @@ public class BroadcastManager {
     private NetworkStateChange networkStateChange;
     private ActionBattareyReceiver actionBattareyReceiver;
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     public BroadcastManager(Context context) {
         this.context = context;
         initNotificationChannel();

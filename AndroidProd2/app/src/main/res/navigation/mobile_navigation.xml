@@ -10,6 +10,21 @@
         android:name="com.naura.cityApp.ui.citydetail.CityDetailFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/city_detail_fragment">
+        <argument
+            android:name="mode"
+            app:argType="string"
+            android:defaultValue="default" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/current_location"
+        android:name="com.naura.cityApp.ui.citydetail.CityDetailFragment"
+        android:label="@string/currentLocationTitle"
+        tools:layout="@layout/city_detail_fragment">
+        <argument
+            android:name="mode"
+            app:argType="string"
+            android:defaultValue="location" />
     </fragment>
 
     <fragment
@@ -40,6 +55,12 @@
         android:id="@+id/city_search_history"
         android:name="com.naura.cityApp.ui.searchhistory.CityWheatherHistoryFragment"
         android:label="@string/searchhistory"
+        tools:layout="@layout/city_search_history" />
+
+    <fragment
+        android:id="@+id/maps"
+        android:name="com.naura.cityApp.ui.maps.MapsFragment"
+        android:label="@string/Maps"
         tools:layout="@layout/city_search_history" />
 
 </navigation>

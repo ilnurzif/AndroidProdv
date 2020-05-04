@@ -7,8 +7,8 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import com.naura.cityApp.ui.citylist.model.database.CityDb;
-import com.naura.cityApp.ui.citylist.model.database.CityWeatherDb;
+import com.naura.cityApp.cityloader.database.CityDb;
+import com.naura.cityApp.cityloader.database.CityWeatherDb;
 
 import java.util.Date;
 import java.util.List;
@@ -45,7 +45,7 @@ public interface CityDao {
     @Query("Select * from cityweatherdb left join citydb on cityweatherdb.city_id=citydb.id where citydb.city_name=:cityname order by mdate desc")
     List<CityWeatherDb> getCityWeatherWithByName(String cityname);
 
-    @Query("Select * from cityweatherdb left join citydb on cityweatherdb.city_id=citydb.id where citydb.city_name=:cityname order by mdate limit :limit")
+    @Query("Select * from cityweatherdb left join citydb on cityweatherdb.city_id=citydb.id where citydb.city_name=:cityname order by mdate desc limit :limit")
     List<CityWeatherDb> getCityWeatherWithByName(String cityname, int limit);
 
     @Query("Select COUNT() from cityweatherdb")

@@ -15,7 +15,7 @@ import com.naura.cityApp.ui.citydetail.CityData;
 import com.naura.cityApp.observercode.EventsConst;
 import com.naura.cityApp.observercode.Observable;
 import com.naura.cityApp.observercode.Observer;
-import com.naura.cityApp.ui.citylist.model.CityLoader;
+import com.naura.cityApp.cityloader.CityLoader;
 import com.naura.myapplication.R;
 
 import java.util.List;

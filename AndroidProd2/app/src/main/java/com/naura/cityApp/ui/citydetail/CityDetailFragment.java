@@ -1,5 +1,6 @@
 package com.naura.cityApp.ui.citydetail;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +16,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.naura.cityApp.observercode.EventsConst;
 import com.naura.cityApp.observercode.Observable;
 import com.naura.cityApp.observercode.Observer;
-import com.naura.cityApp.ui.citylist.model.CityLoader;
+import com.naura.cityApp.cityloader.CityLoader;
 import com.naura.cityApp.ui.theatherdata.TheatherData;
 import com.naura.cityApp.ui.theatherdata.TheatherWeekAdapter;
 import com.naura.myapplication.R;
@@ -30,6 +31,7 @@ public class CityDetailFragment extends Fragment implements Observer {
     private TheatherWeekAdapter adapter;
     private CityLoader cityLoader;
     private FloatingActionButton historyOpenFAB;
+    private FloatingActionButton floatingActionButton;
 
     @Nullable
     @Override
@@ -53,6 +55,15 @@ public class CityDetailFragment extends Fragment implements Observer {
         observable.subscribe(this);
 
         cityLoader = CityLoader.getInstance(getActivity());
+
+        Bundle bundle=this.getArguments();
+        String mode="";
+        if (bundle!=null)
+            mode=bundle.getString("mode");
+
+        if (mode.equals("location")) {
+            cityLoader.locationLoad();
+        };
         cityLoader.startLoad();
         observable.notify(EventsConst.selectCityEvent, cityLoader.getDefaultCityName());
 
@@ -63,6 +74,7 @@ public class CityDetailFragment extends Fragment implements Observer {
                 observable.notify(EventsConst.openCityHistory,null);
             }
         });
+
     }
 
     private void dataLoad(String cityName, List<TheatherData> theatherDays) {

@@ -5,8 +5,8 @@ import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 
 import com.naura.cityApp.database.basecode.dao.CityDao;
-import com.naura.cityApp.ui.citylist.model.database.CityDb;
-import com.naura.cityApp.ui.citylist.model.database.CityWeatherDb;
+import com.naura.cityApp.cityloader.database.CityDb;
+import com.naura.cityApp.cityloader.database.CityWeatherDb;
 
 @Database(entities = {CityDb.class, CityWeatherDb.class}, version = 1)
 @TypeConverters(DateConverter.class)

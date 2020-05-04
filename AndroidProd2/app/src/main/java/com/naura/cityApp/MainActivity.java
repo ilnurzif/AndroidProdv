@@ -3,32 +3,26 @@ package com.naura.cityApp;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.Menu;
 import android.widget.SearchView;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.iid.InstanceIdResult;
 import com.naura.cityApp.broadcast.BroadcastManager;
+import com.naura.cityApp.location.CityLocation;
 import com.naura.cityApp.observercode.EventsConst;
 import com.naura.cityApp.observercode.Observable;
 import com.naura.cityApp.observercode.Observer;
 import com.naura.cityApp.ui.BaseActivity;
 import com.naura.cityApp.ui.citydetail.CityData;
 import com.naura.cityApp.ui.citydetail.IloadImage;
-import com.naura.cityApp.ui.citylist.model.CityLoader;
+import com.naura.cityApp.cityloader.CityLoader;
 import com.naura.myapplication.R;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.core.view.MenuItemCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -47,15 +41,15 @@ public class MainActivity extends BaseActivity implements Observer {
     private Target mTarget;
     private IloadImage loadBackGround;
     private BroadcastManager broadcastManager;
+    private CityLocation cityLocation;
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initViews();
     }
-
 
     @Override
     protected void onStart() {
@@ -69,7 +63,6 @@ public class MainActivity extends BaseActivity implements Observer {
         super.onStop();
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     private void initViews() {
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -83,31 +76,32 @@ public class MainActivity extends BaseActivity implements Observer {
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.city_detail, R.id.city_list)
+                R.id.city_detail, R.id.city_list, R.id.maps)
                 .setDrawerLayout(drawer)
                 .build();
         navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
-        loadBackGround=new loadBackGround();
+        loadBackGround = new loadBackGround();
         mTarget = new Target() {
             @Override
-            public void onBitmapLoaded (final Bitmap bitmap, Picasso.LoadedFrom from){
-                Drawable loadedDrawable=new BitmapDrawable(getResources(),bitmap);
+            public void onBitmapLoaded(final Bitmap bitmap, Picasso.LoadedFrom from) {
+                Drawable loadedDrawable = new BitmapDrawable(getResources(), bitmap);
                 loadBackGround.loadImage(loadedDrawable);
             }
+
             @Override
             public void onBitmapFailed(Exception e, Drawable errorDrawable) {
             }
+
             @Override
             public void onPrepareLoad(Drawable placeHolderDrawable) {
             }
         };
         broadcastManager = new BroadcastManager(this);
+        cityLocation = CityLocation.getInstance(this);
     }
-
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -121,6 +115,7 @@ public class MainActivity extends BaseActivity implements Observer {
                         observable.notify(EventsConst.searchCityEvent, query);
                         return false;
                     }
+
                     @Override
                     public boolean onQueryTextChange(String newText) {
                         return false;
@@ -133,6 +128,7 @@ public class MainActivity extends BaseActivity implements Observer {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         return super.onOptionsItemSelected(item);
     }
+
 
     @Override
     public boolean onSupportNavigateUp() {
@@ -154,9 +150,15 @@ public class MainActivity extends BaseActivity implements Observer {
 
         if (eventName.equals(EventsConst.openCityHistory)) {
             navController.navigate(R.id.city_search_history);
-            String title=cityLoader.getDefaultCityName()+" - история просмотров";
+            String title = cityLoader.getDefaultCityName() + " - история просмотров";
             toolbar.setTitle(title);
         }
+
+        if (eventName.equals(EventsConst.mapSelectEvent)) {
+            dataLoad(cityLoader.getDefaultCityName());
+            navController.navigate(R.id.city_detail);
+        }
+
     }
 
     private void dataLoad(String cityName) {
@@ -166,21 +168,40 @@ public class MainActivity extends BaseActivity implements Observer {
     }
 
     class loadBackGround implements IloadImage {
-      @Override
-       public void loadImage(final Drawable drawable) {
-          mainLayout.setBackground(drawable);
-       }
+        @Override
+        public void loadImage(final Drawable drawable) {
+            mainLayout.setBackground(drawable);
+        }
     }
 
     public void setBackGround(final CityData cityData) {
-        String imageUrl=cityData.getImageUrl();
-                if (imageUrl.trim().equals(""))
-                    Picasso.get()
-                            .load(R.drawable.default_image)
-                            .into(mTarget);
-                else
-                    Picasso.get()
-                            .load(imageUrl)
-                            .into(mTarget);
+        if (cityData == null) return;
+        String imageUrl = cityData.getImageUrl();
+        if (imageUrl.trim().equals(""))
+            Picasso.get()
+                    .load(R.drawable.default_image)
+                    .into(mTarget);
+        else
+            Picasso.get()
+                    .load(imageUrl)
+                    .into(mTarget);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        cityLocation.updateLocation();
+    }
+
+    @Override
+    protected void onPause() {
+        cityLocation.onPause();
+        super.onPause();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        cityLocation.onRequestPermissionsResult(requestCode, grantResults);
     }
 }

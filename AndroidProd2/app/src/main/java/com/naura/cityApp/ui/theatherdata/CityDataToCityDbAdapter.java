@@ -1,9 +1,8 @@
 package com.naura.cityApp.ui.theatherdata;
 
 import com.naura.cityApp.ui.citydetail.CityData;
-import com.naura.cityApp.ui.citylist.model.database.CityDb;
-import com.naura.cityApp.ui.citylist.model.database.CityWeatherDb;
-import com.naura.cityApp.ui.theatherdata.TheatherData;
+import com.naura.cityApp.cityloader.database.CityDb;
+import com.naura.cityApp.cityloader.database.CityWeatherDb;
 
 import java.util.ArrayList;
 import java.util.Date;

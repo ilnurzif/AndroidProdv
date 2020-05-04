@@ -1,13 +1,14 @@
-package com.naura.cityApp.ui.citylist.model;
+package com.naura.cityApp.cityloader;
 
 import android.content.Context;
 
 import com.naura.cityApp.App;
+import com.naura.cityApp.location.CityLocation;
 import com.naura.cityApp.observercode.EventsConst;
-import com.naura.cityApp.ui.citylist.model.database.CityWeatherDb;
+import com.naura.cityApp.cityloader.database.CityWeatherDb;
 import com.naura.cityApp.database.basecode.DBLoadDataAsyncTask;
 import com.naura.cityApp.database.basecode.dao.CityDao;
-import com.naura.cityApp.ui.citylist.model.rest.ILoadData;
+import com.naura.cityApp.cityloader.rest.ILoadData;
 import com.naura.cityApp.ui.theatherdata.CityDataToCityDbAdapter;
 import com.naura.cityApp.ui.theatherdata.TheatherData;
 import com.naura.cityApp.ui.citydetail.CityData;
@@ -31,6 +32,7 @@ public class CityLoader {
     protected Observable observable;
     private ILoadData restLoadData; // для загруки погоды с сервера
     private SharedPrefProp sharedPrefProp = new SharedPrefProp();
+    private CityLocation cityLocation;
 
     public void setDefaultKey(String defaultKey) {
         this.defaultKey = defaultKey;
@@ -124,6 +126,17 @@ public class CityLoader {
         restLoadData.request(getDefaultCityName()); // и если сервер доступен обновляем
     }
 
+    public void locationLoad() {
+        cityLocation = CityLocation.getInstance(context);
+        double latitude = cityLocation.getLatitude();
+        double longitude = cityLocation.getLongitude();
+        restLoadData.request(latitude, longitude);
+    }
+
+    public void locationLoad(double latitude, double longitude) {
+        restLoadData.request(latitude, longitude);
+    }
+
     protected CityData findCachedCity(String cityname) {
         for (CityData cd : cityList) {
             if (cd.getName().equals(cityname))
@@ -196,8 +209,7 @@ public class CityLoader {
             setDefaultKey(cityName);
             Observable observable = Observable.getInstance();
 
-            CityData cityData = new CityData(cityName, cityName,
-                    cityTheatherList);
+            CityData cityData = new CityData(cityName, cityName, cityTheatherList);
             cityData.setFavoriteCity(false);
 
             if (saveData) {
@@ -211,6 +223,17 @@ public class CityLoader {
             } else {
                 observable.notify(EventsConst.cityLoadFinish, cityTheatherList);
             }
+        }
+
+        @Override
+        public void execute(List<TheatherData> cityTheatherList, String cityName) {
+            setDefaultKey(cityName);
+            Observable observable = Observable.getInstance();
+
+            CityData cityData = new CityData(cityName, cityName, cityTheatherList);
+            cityData.setFavoriteCity(false);
+
+            observable.notify(EventsConst.selectCityEvent, cityName);
         }
 
         @Override

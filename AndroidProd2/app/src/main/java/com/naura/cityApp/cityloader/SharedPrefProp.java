@@ -1,4 +1,4 @@
-package com.naura.cityApp.ui.citylist.model;
+package com.naura.cityApp.cityloader;
 
 import android.content.Context;
 import android.content.SharedPreferences;

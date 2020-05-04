@@ -55,4 +55,8 @@
     <string name="KazanCity">Казань</string>
     <string name="broadcasteventmsg">Внимание!</string>
     <string name="airplanemodeenablemsg">Режим самолета</string>
+    <string name="currentLocationTitle">Текущее местоположение</string>
+    <string name="maps">Карта</string>
+    <string name="Maps">Карта</string>
+    <string name="longClickMsg">Для выбора местности используйте долгое нажатие</string>
 </resources>

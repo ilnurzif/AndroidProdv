@@ -1,9 +1,9 @@
-package com.naura.cityApp.ui.citylist.model;
+package com.naura.cityApp.cityloader;
 
 import com.naura.cityApp.App;
 import com.naura.cityApp.ui.citydetail.CityData;
-import com.naura.cityApp.ui.citylist.model.database.CityDb;
-import com.naura.cityApp.ui.citylist.model.database.CityWeatherDb;
+import com.naura.cityApp.cityloader.database.CityDb;
+import com.naura.cityApp.cityloader.database.CityWeatherDb;
 import com.naura.cityApp.database.basecode.dao.CityDao;
 import com.naura.cityApp.ui.theatherdata.CityDataToCityDbAdapter;
 import com.naura.cityApp.ui.theatherdata.TheatherData;

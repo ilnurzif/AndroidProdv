@@ -65,6 +65,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:srcCompat="@android:drawable/ic_menu_today" />
 
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout
@@ -81,7 +82,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:layout_marginStart="@dimen/text_margin"
+                android:layout_marginStart="10dp"
                 android:text="@string/weekforecast"
                 android:textColor="@color/colorWhite"
                 android:textSize="@dimen/title_textsize"/>
@@ -90,8 +91,9 @@
                 android:id="@+id/weekdays"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="4"
+                android:layout_weight="8"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager">
             </androidx.recyclerview.widget.RecyclerView>
-        </LinearLayout>
+
+              </LinearLayout>
     </LinearLayout>

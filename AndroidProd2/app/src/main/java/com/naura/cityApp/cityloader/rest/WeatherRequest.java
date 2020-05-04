@@ -1,4 +1,4 @@
-package com.naura.cityApp.ui.citylist.model.rest;
+package com.naura.cityApp.cityloader.rest;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -7,5 +7,10 @@ public class WeatherRequest {
     private WeatherAddParams[] weatherAddParams;
     public WeatherAddParams[] getWeatherAddParams() {
         return weatherAddParams;
+    }
+    @SerializedName("city")
+    private City city;
+    public City getCity() {
+        return city;
     }
 }

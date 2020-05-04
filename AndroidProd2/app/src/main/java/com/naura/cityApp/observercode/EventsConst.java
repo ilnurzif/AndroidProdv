@@ -9,4 +9,6 @@ public class EventsConst {
     public static String addNewCity="addNewCity";
     public static String stopApp="stopApp";
     public static String openCityHistory="openCityHistory";
+    public static String locationCityEvent="locationCityEvent";
+    public static String mapSelectEvent="mapSelectEvent";
 }

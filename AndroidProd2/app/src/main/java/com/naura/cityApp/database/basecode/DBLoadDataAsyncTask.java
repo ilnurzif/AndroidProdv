@@ -3,10 +3,10 @@ import android.os.AsyncTask;
 
 import com.naura.cityApp.App;
 import com.naura.cityApp.ui.theatherdata.CityDataToCityDbAdapter;
-import com.naura.cityApp.ui.citylist.model.CityLoader;
-import com.naura.cityApp.ui.citylist.model.ICallData;
+import com.naura.cityApp.cityloader.CityLoader;
+import com.naura.cityApp.cityloader.ICallData;
 import com.naura.cityApp.database.basecode.dao.CityDao;
-import com.naura.cityApp.ui.citylist.model.database.CityWeatherDb;
+import com.naura.cityApp.cityloader.database.CityWeatherDb;
 import com.naura.cityApp.ui.theatherdata.TheatherData;
 
 import java.util.List;
