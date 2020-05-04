@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/city_detail_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_margin="@dimen/border_margin"
+            android:layout_weight="1"
+            android:background="@color/colorBlackFone"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/airhumiditytextView"
+                android:layout_width="356dp"
+                android:layout_height="19dp"
+                android:layout_marginTop="16dp"
+                android:layout_weight="1"
+                android:text=""
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/title_textsize"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/temperaturetextView"
+                android:layout_width="176dp"
+                android:layout_height="203dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="12dp"
+                android:layout_weight="7"
+                android:text="---"
+                android:theme="@style/bigTextTheme"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/airhumiditytextView" />
+
+            <com.naura.cityApp.ui.citydetail.HumidutyView
+                android:id="@+id/humidutyView"
+                android:layout_width="55dp"
+                android:layout_height="202dp"
+                android:layout_marginTop="12dp"
+                android:clickable="true"
+                app:dangerLevelColor="#AE2525"
+                app:normLevelColor="#33691E"
+                app:lowLevelColor="#D1CE40"
+                app:currentLevelColor="#EFEEEA"
+                app:titleTextColor="@color/colorWhite"
+                app:layout_constraintStart_toEndOf="@+id/temperaturetextView"
+                app:layout_constraintTop_toBottomOf="@+id/airhumiditytextView" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/historyOpenFAB"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="24dp"
+                android:layout_marginBottom="24dp"
+                android:clickable="true"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:srcCompat="@android:drawable/ic_menu_today" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <LinearLayout
+            android:id="@+id/LinearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_margin="@dimen/border_margin"
+            android:layout_marginTop="1dp"
+            android:background="@color/colorBlackFone"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/gridtextView"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_marginStart="10dp"
+                android:text="@string/weekforecast"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/title_textsize"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/weekdays"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="8"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager">
+            </androidx.recyclerview.widget.RecyclerView>
+
+              </LinearLayout>
+    </LinearLayout>
