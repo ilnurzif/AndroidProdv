@@ -7,7 +7,7 @@ public class Observable {
     private static Observable instance = null;
     private static List<Observer> observers;
 
-    private Observable() {
+    public Observable() {
     }
 
     public static Observable getInstance() {

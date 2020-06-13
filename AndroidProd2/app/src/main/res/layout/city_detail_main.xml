@@ -15,7 +15,7 @@
         android:layout_weight="6">
         <fragment
             android:id="@+id/cities"
-            android:name="com.naura.cityApp.ui.citydetail.CityDetailFragment"
+            android:name="com.naura.cityApp.fragments.citydetail.CityDetailFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             />

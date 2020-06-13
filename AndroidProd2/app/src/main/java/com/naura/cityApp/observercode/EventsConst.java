@@ -11,4 +11,6 @@ public class EventsConst {
     public static String openCityHistory="openCityHistory";
     public static String locationCityEvent="locationCityEvent";
     public static String mapSelectEvent="mapSelectEvent";
+    public static String LoadWeatherWithCityFinish ="StartLoadWeatherWithCity";
+    public static String searchFieldVisible="searchFieldVisible";
 }

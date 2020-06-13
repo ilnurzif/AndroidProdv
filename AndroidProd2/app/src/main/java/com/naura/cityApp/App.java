@@ -2,15 +2,19 @@ package com.naura.cityApp;
 
 import android.app.Application;
 
-import androidx.room.Room;
-
-import com.naura.cityApp.database.basecode.CitysDatabase;
-import com.naura.cityApp.database.basecode.dao.CityDao;
+import com.naura.cityApp.di.component.ApplicationComponent;
+import com.naura.cityApp.di.component.DaggerApplicationComponent;
+import com.naura.cityApp.di.module.ApplicationModule;
+import com.naura.cityApp.di.module.CityLoaderModule;
+import com.naura.cityApp.di.module.ConnectiveModule;
+import com.naura.cityApp.di.module.DatabaseModule;
+import com.naura.cityApp.di.module.ObservableModule;
+import com.naura.cityApp.di.module.RetrofitModule;
 
 
 public class App extends Application {
     private static App singleApp;
-    private CitysDatabase db;
+    protected static ApplicationComponent mApplicationComponent;
 
     public static App getInstance() {
         return singleApp;
@@ -21,15 +25,20 @@ public class App extends Application {
         super.onCreate();
         singleApp = this;
 
-        db=Room.databaseBuilder(
-                getApplicationContext(),
-                CitysDatabase.class,
-                "cityweather")
-              //  .allowMainThreadQueries() //для отладки
+        mApplicationComponent = DaggerApplicationComponent
+                .builder()
+                .applicationModule(new ApplicationModule(this))
+                .databaseModule(new DatabaseModule(this))
+                .connectiveModule(new ConnectiveModule(this))
+                .retrofitModule(new RetrofitModule())
+                .observableModule(new ObservableModule())
+                .cityLoaderModule(new CityLoaderModule(this))
                 .build();
+        mApplicationComponent.inject(this);
     }
 
-    public CityDao getCityDao() {
-        return db.getCityDao();
+    public static ApplicationComponent getComponent() {
+        return mApplicationComponent;
     }
+
 }

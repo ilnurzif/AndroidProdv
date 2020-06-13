@@ -40,7 +40,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/airhumiditytextView" />
 
-            <com.naura.cityApp.ui.citydetail.HumidutyView
+            <com.naura.cityApp.fragments.citydetail.HumidutyView
                 android:id="@+id/humidutyView"
                 android:layout_width="55dp"
                 android:layout_height="202dp"
