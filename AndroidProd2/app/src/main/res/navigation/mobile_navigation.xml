@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/city_detail">
+
+    <fragment
+        android:id="@+id/city_detail"
+        android:name="com.naura.cityApp.fragments.citydetail.CityDetailFragment"
+        android:label="@string/menu_home"
+        tools:layout="@layout/city_detail_fragment">
+        <argument
+            android:name="mode"
+            app:argType="string"
+            android:defaultValue="default" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/current_location"
+        android:name="com.naura.cityApp.fragments.citydetail.CityDetailFragment"
+        android:label="@string/currentLocationTitle"
+        tools:layout="@layout/city_detail_fragment">
+        <argument
+            android:name="mode"
+            app:argType="string"
+            android:defaultValue="location" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fovorit_city"
+        android:name="com.naura.cityApp.fragments.citylist.ui.CityListFavorFragment"
+        android:label="@string/favorite_city_title"
+        tools:layout="@layout/city_list_fragment" />
+
+    <fragment
+        android:id="@+id/city_list"
+        android:name="com.naura.cityApp.fragments.citylist.ui.CityListFragment"
+        android:label="@string/all_city_title"
+        tools:layout="@layout/city_list_fragment" />
+
+    <fragment
+        android:id="@+id/city_search_history"
+        android:name="com.naura.cityApp.fragments.searchhistory.CitySearchFragment"
+        android:label="@string/searchhistory"
+        tools:layout="@layout/city_search_history" />
+
+    <fragment
+        android:id="@+id/maps"
+        android:name="com.naura.cityApp.fragments.maps.MapsFragment"
+        android:label="@string/Maps"
+        tools:layout="@layout/city_search_history" />
+
+</navigation>

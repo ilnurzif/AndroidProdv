@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/city_detail_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:paddingStart="16dp"
+        android:layout_margin="@dimen/border_margin"
+        android:paddingBottom="16dp"
+        android:background="@color/colorBlackFone">
+        <TextView
+            android:id="@+id/currentDateTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="13 июня 2020 года"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/title_textsize"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:gravity="center"
+            android:layout_weight="3"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/temperaturetextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="23 С"
+                android:theme="@style/bigTextTheme"/>
+            <ImageView
+                android:id="@+id/weatherIconIW"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/kweather" />
+        </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:gravity="center"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/humidityTodayTW"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorWhite"
+            android:layout_marginBottom="5dp"
+            android:text="влажность: 76 %"/>
+        <TextView
+            android:id="@+id/pressureTodayTW"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorWhite"
+            android:layout_marginBottom="5dp"
+            android:text="давление 787 мм.рт.мт"/>
+        <TextView
+            android:id="@+id/descriptionTodayTW"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorWhite"
+            android:layout_marginBottom="5dp"
+            android:text="облачно с прояснениями"/>
+    </LinearLayout>
+</LinearLayout>
+        <LinearLayout
+            android:id="@+id/LinearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_margin="@dimen/border_margin"
+            android:layout_marginTop="1dp"
+            android:background="@color/colorBlackFone"
+            android:paddingStart="16dp"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/gridtextView"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="@string/weekforecast"
+                android:textColor="@color/colorWhite"
+                android:textSize="22sp"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/weekdays"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="8"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager">
+            </androidx.recyclerview.widget.RecyclerView>
+
+              </LinearLayout>
+    </LinearLayout>
