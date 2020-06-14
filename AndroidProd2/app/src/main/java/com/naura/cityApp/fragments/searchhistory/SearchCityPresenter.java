@@ -5,7 +5,7 @@ import com.naura.cityApp.basemodel.CityLoader;
 import com.naura.cityApp.observercode.EventsConst;
 import com.naura.cityApp.observercode.Observable;
 import com.naura.cityApp.observercode.Observer;
-import com.naura.cityApp.fragments.theatherdata.WeatherData;
+import com.naura.cityApp.basemodel.WeatherData;
 
 import java.util.List;
 

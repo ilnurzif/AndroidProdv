@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.naura.myapplication.R;
 import com.squareup.picasso.Picasso;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
@@ -40,9 +41,9 @@ public class Utility {
     }
 
     public static void initGridReciclerViewAdapter(Activity activity, RecyclerView.Adapter adapter, RecyclerView rw) {
-     int NUM_COLUMNS=3;
-     rw.setLayoutManager(new GridLayoutManager(activity, NUM_COLUMNS));
-     rw.setAdapter(adapter);
+        int NUM_COLUMNS = 3;
+        rw.setLayoutManager(new GridLayoutManager(activity, NUM_COLUMNS));
+        rw.setAdapter(adapter);
     }
 
     public static void repaintView(Context context, RecyclerView.ViewHolder holder, int position, int currentPosition) {
@@ -84,26 +85,31 @@ public class Utility {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public static Boolean checkActualData(Date firstDate) {
-        Date currentDate=new Date();
-        LocalDate firstlocalDate= firstDate.toInstant()
+        Date currentDate = new Date();
+        LocalDate firstlocalDate = firstDate.toInstant()
                 .atZone(ZoneId.systemDefault())
                 .toLocalDate();
-        LocalDate currlocalDate= currentDate.toInstant()
+        LocalDate currlocalDate = currentDate.toInstant()
                 .atZone(ZoneId.systemDefault())
                 .toLocalDate();
-        return currlocalDate.compareTo(firstlocalDate)<=0;
+        return currlocalDate.compareTo(firstlocalDate) <= 0;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public static int compareDates(Date date1, Date date2) {
-        Date currentDate=new Date();
-        LocalDate firstLocalDate= date1.toInstant()
+        Date currentDate = new Date();
+        LocalDate firstLocalDate = date1.toInstant()
                 .atZone(ZoneId.systemDefault())
                 .toLocalDate();
-        LocalDate secLocalDate= date2.toInstant()
+        LocalDate secLocalDate = date2.toInstant()
                 .atZone(ZoneId.systemDefault())
                 .toLocalDate();
         return firstLocalDate.compareTo(secLocalDate);
     }
 
+    public static String getCurrentDate() {
+        Date date = new Date();
+        String dateStr = new SimpleDateFormat("E dd.MM.yyyy").format(date);
+        return dateStr;
+    }
 }

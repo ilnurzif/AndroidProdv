@@ -1,6 +1,6 @@
 package com.naura.cityApp.fragments.citylist.ui;
 
-import com.naura.cityApp.fragments.citydetail.CityData;
+import com.naura.cityApp.basemodel.CityData;
 
 import java.util.List;
 

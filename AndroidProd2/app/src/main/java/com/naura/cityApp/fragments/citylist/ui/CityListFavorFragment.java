@@ -10,7 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.naura.cityApp.fragments.citydetail.CityData;
+import com.naura.cityApp.basemodel.CityData;
 import com.naura.cityApp.fragments.citylist.CityListPresenter;
 import com.naura.cityApp.utility.Utility;
 import com.naura.myapplication.R;
@@ -31,7 +31,7 @@ public class CityListFavorFragment extends Fragment implements FragmentView {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        cityListPresenter=new CityListPresenter();
+        cityListPresenter = new CityListPresenter();
         initVisual(view);
         dataLoad();
     }
@@ -49,9 +49,9 @@ public class CityListFavorFragment extends Fragment implements FragmentView {
     }
 
     private void dataLoad() {
-        List<CityData> favorCityList=cityListPresenter.getFavorCityList();
-        cityListAdapter = new CityListAdapter(getContext(), favorCityList, true,cityListPresenter);
-        Utility.initGridReciclerViewAdapter(getActivity(),cityListAdapter,recyclerView);
+        List<CityData> favorCityList = cityListPresenter.getFavorCityList();
+        cityListAdapter = new CityListAdapter(getContext(), favorCityList, true, cityListPresenter);
+        Utility.initGridReciclerViewAdapter(getActivity(), cityListAdapter, recyclerView);
     }
 
     private void initVisual(View view) {

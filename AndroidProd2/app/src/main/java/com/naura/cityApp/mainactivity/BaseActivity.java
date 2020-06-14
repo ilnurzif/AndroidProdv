@@ -15,15 +15,15 @@ public class BaseActivity extends AppCompatActivity implements Observer {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-      super.onCreate(savedInstanceState);
-       setThemeD();
+        super.onCreate(savedInstanceState);
+        setThemeD();
     }
 
     protected void setThemeD() {
-       if (isDarkTheme()) {
+        if (isDarkTheme()) {
             setTheme(R.style.Theme_AppCompat_DayNight_NoActionBar);
         } else {
-             setTheme(R.style.AppTheme_NoActionBar);
+            setTheme(R.style.AppTheme_NoActionBar);
         }
     }
 

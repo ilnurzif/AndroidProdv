@@ -21,14 +21,16 @@ public class CityWeatherDb {
     public static final String PRESSURE = "Pressure";
     public static final String CITY_ID = "city_id";
     public static final String DESCRIPTION = "description";
+    public static final String ICON_URL = "icon";
 
-    public CityWeatherDb(long cityId, Date date, float tempereture, float humitity, float pressure, String description) {
+    public CityWeatherDb(long cityId, Date date, float tempereture, float humitity, float pressure, String description, String iconurl) {
         this.date = date;
         this.tempereture = tempereture;
         this.humitity = humitity;
         this.pressure = pressure;
         this.cityId = cityId;
         this.description = description;
+        this.iconurl = iconurl;
     }
 
     @PrimaryKey(autoGenerate = true)
@@ -52,4 +54,7 @@ public class CityWeatherDb {
 
     @ColumnInfo(name = DESCRIPTION)
     public String description;
+
+    @ColumnInfo(name = ICON_URL)
+    public String iconurl;
 }

@@ -1,5 +1,6 @@
 package com.naura.cityApp.fragments.citydetail;
 
+import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -10,8 +11,9 @@ import com.naura.cityApp.basemodel.CityLoader;
 import com.naura.cityApp.observercode.EventsConst;
 import com.naura.cityApp.observercode.Observable;
 import com.naura.cityApp.observercode.Observer;
-import com.naura.cityApp.fragments.theatherdata.WeatherData;
+import com.naura.cityApp.basemodel.WeatherData;
 import com.naura.cityApp.utility.Utility;
+
 import java.util.Date;
 import java.util.List;
 
@@ -27,6 +29,9 @@ public class CityDetailPresenter implements Observer {
     @Inject
     CityLoader cityLoader;
 
+    @Inject
+    Resources resources;
+
     private CityDetailPresenter() {
         App.getComponent().inject(this);
         observable.subscribe(this);
@@ -39,7 +44,6 @@ public class CityDetailPresenter implements Observer {
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void bind(CityDetailFragmentView fragmentView) {
         this.cityDetailFragmentView = fragmentView;
-        //  cityLoader.startLoad();
         dataLoad(cityLoader.getDefaultCityName(), cityLoader.getDefaultCityWeatherList());
     }
 
@@ -54,8 +58,6 @@ public class CityDetailPresenter implements Observer {
             cityLoader.startLoadFromInet();
             return;
         }
-
-
         Date firstDate = weatherDays.get(0).getDay();
         Boolean dataActual = Utility.checkActualData(firstDate);
         if (!dataActual) {
@@ -68,8 +70,23 @@ public class CityDetailPresenter implements Observer {
         String temperatureNow = weatherDays.get(0).getFormatedTemperature();
         cityDetailFragmentView.setCurrentTemperature(temperatureNow);
 
+
         int airhumidityInt = weatherDays.get(0).getAirhumidity();
-        cityDetailFragmentView.setCurrentHumiduty(airhumidityInt);
+        String airhumidityStr = "Влажность: " + airhumidityInt + " %";
+        cityDetailFragmentView.setCurrentHumiduty(airhumidityStr);
+
+        int pressureInt = weatherDays.get(0).getPressure();
+        String pressureStr = "Давление: " + pressureInt + " Pa";
+        cityDetailFragmentView.setCurrentPressure(pressureStr);
+
+        String weatherDescription = weatherDays.get(0).getDescription();
+        cityDetailFragmentView.setCurrentWeatherDesc(weatherDescription);
+
+        String url="i"+weatherDays.get(0).getIconUrl();
+        cityDetailFragmentView.callWeatherIcon(url);
+
+        cityDetailFragmentView.callCurrentDate(Utility.getCurrentDate());
+        observable.notify(EventsConst.selectCityEvent, cityLoader.getDefaultCityName());
     }
 
     public void startCityLoad(Bundle bundle) {
@@ -84,7 +101,6 @@ public class CityDetailPresenter implements Observer {
         cityLoader.startLoadFromDB();
     }
 
-
     public void openCityHistory() {
         observable.notify(EventsConst.openCityHistory, null);
     }
@@ -97,15 +113,15 @@ public class CityDetailPresenter implements Observer {
             List<WeatherData> cityWeatherList = (List<WeatherData>) val;
             dataLoad(cityLoader.getDefaultCityName(), cityWeatherList);
         }
-         if (eventName.equals(EventsConst.LoadWeatherWithCityFinish)) {
+        if (eventName.equals(EventsConst.LoadWeatherWithCityFinish)) {
             List<WeatherData> weatherDataList = (List<WeatherData>) val;
-            if (weatherDataList == null&&cityDetailFragmentView==null) return;
+            if (weatherDataList == null && cityDetailFragmentView == null) return;
             dataLoad(cityLoader.getDefaultCityName(), weatherDataList);
         }
         if (eventName.equals(EventsConst.addNewCity)) {
-          //  if (cityDetailFragmentView!=null)
-                cityLoader.startLoadFromDB();
+            cityLoader.startLoadFromDB();
         }
     }
+
 }
 

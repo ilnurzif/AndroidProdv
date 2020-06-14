@@ -12,7 +12,6 @@ public class ObservableModule {
     @Singleton
     @Provides
     public Observable getObservable() {
-      //  return new Observable();
         return Observable.getInstance();
     }
 }

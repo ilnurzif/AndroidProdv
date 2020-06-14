@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.widget.SearchView;
 
 import com.google.android.material.navigation.NavigationView;
+import com.naura.cityApp.App;
 import com.naura.cityApp.broadcast.BroadcastManager;
 import com.naura.cityApp.location.CityLocation;
 import com.naura.myapplication.R;
@@ -41,25 +42,23 @@ public class MainActivity extends BaseActivity implements MainView {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        //  cityLocation=CityLocation.getInstance(this);
+        App.getComponent().inject(this);
         mainActivityPresener = MainActivityPresener.getInstance();
         setContentView(R.layout.activity_main);
         initViews();
     }
 
-
     @Override
     protected void onResume() {
         super.onResume();
         if (ActivityCompat.checkSelfPermission(this,
-                Manifest.permission.ACCESS_COARSE_LOCATION) ==  PackageManager.PERMISSION_GRANTED) {
+                Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             cityLocation.updateLocation();
         } else {
             ActivityCompat.requestPermissions(MainActivity.this,
                     new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
                     REQUEST_LOCATION_PERMISSION);
         }
-
         mainActivityPresener.bind(this);
     }
 

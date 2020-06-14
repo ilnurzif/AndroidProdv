@@ -1,11 +1,8 @@
 package com.naura.cityApp.rest;
 
+import com.naura.cityApp.App;
 import com.naura.cityApp.basemodel.ICallData;
-import com.naura.cityApp.rest.ILoadData;
-import com.naura.cityApp.rest.OpenWeather;
-import com.naura.cityApp.rest.Weather;
-import com.naura.cityApp.rest.WeatherAddParams;
-import com.naura.cityApp.fragments.theatherdata.WeatherData;
+import com.naura.cityApp.basemodel.WeatherData;
 import com.naura.cityApp.utility.Utility;
 
 import java.text.ParseException;
@@ -18,36 +15,32 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
-import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
-import retrofit2.converter.gson.GsonConverterFactory;
+
 
 import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
+import javax.inject.Inject;
+import javax.inject.Named;
+
 public class RestLoadData implements ILoadData {
-    private OpenWeather openWeather;
-    private static String baseUrl = "https://api.openweathermap.org";
     private int cnt = 16;
     private String lang = "ru";
-    private String keyApi = "1d208cf3fc4085d8d8ba431d9d470fb3";
     private String units = "metric";
     private ICallData callData;
     private String cityName;
 
+    @Inject
+    OpenWeather openWeather;
+
+    @Inject
+    @Named("keyApi")
+    String keyApi;
+
     public RestLoadData(ICallData callData) {
         this.callData = callData;
-        initRetrofit();
-    }
-
-    private void initRetrofit() {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(baseUrl)
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        openWeather = retrofit.create(OpenWeather.class);
+        App.getComponent().inject(this);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -123,9 +116,10 @@ public class RestLoadData implements ILoadData {
             String dt_txt = weatherAddParams.getDt_txt();
             Weather[] weather = weatherAddParams.getWeather();
             String description = weather[0].getDescription();
+            String iconUrl = weather[0].getIcon();
 
             Date tempDate = getFormatedDate(dt_txt);
-            return new WeatherData(temper, pressure, humidity, tempDate, description);
+            return new WeatherData(temper, pressure, humidity, tempDate, description, iconUrl);
         } catch (ParseException e) {
             e.printStackTrace();
         }

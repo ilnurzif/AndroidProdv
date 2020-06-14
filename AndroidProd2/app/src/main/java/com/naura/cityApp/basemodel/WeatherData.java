@@ -1,4 +1,4 @@
-package com.naura.cityApp.fragments.theatherdata;
+package com.naura.cityApp.basemodel;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
@@ -12,6 +12,7 @@ public class WeatherData implements Serializable {
     private int pressure;
     private String description;
     private long ID;
+    private String iconUrl;
 
     public float getTemperature() {
         return temperature;
@@ -29,12 +30,13 @@ public class WeatherData implements Serializable {
         return pressure;
     }
 
-    public WeatherData(float temperature, int pressure, int airhumidity, Date date, String description) {
+    public WeatherData(float temperature, int pressure, int airhumidity, Date date, String description, String iconUrl) {
         this.temperature = temperature;
         this.date = date;
         this.airhumidity = airhumidity;
-        this.description=description;
-        this.pressure=pressure;
+        this.description = description;
+        this.pressure = pressure;
+        this.iconUrl = iconUrl;
     }
 
 
@@ -48,22 +50,26 @@ public class WeatherData implements Serializable {
     }
 
     public String getFormatedTemperature() {
-        String formTemp=String.format(Locale.getDefault(), "%.0f", temperature) + "\u2103";
+        String formTemp = String.format(Locale.getDefault(), "%.0f", temperature) + "\u2103";
         return formTemp;
     }
 
     public String getFormatedHumitity() {
-       String fornHum= Integer.toString(airhumidity)+"%";
-       return fornHum;
+        String fornHum = Integer.toString(airhumidity) + "%";
+        return fornHum;
     }
 
     public String getFormatedPressure() {
-        String formPress= Integer.toString(pressure)+"hPa";
+        String formPress = Integer.toString(pressure) + "hPa";
         return formPress;
     }
 
+    public String getIconUrl() {
+        return iconUrl;
+    }
+
     public void setID(long id) {
-        this.ID=id;
+        this.ID = id;
     }
 
     public long getID() {

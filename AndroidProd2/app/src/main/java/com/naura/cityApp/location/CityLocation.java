@@ -41,6 +41,10 @@ public class CityLocation {
     }
 
 
+    public static CityLocation getInstance() {
+        return cityLocation;
+    }
+
     public String getCityName() {
         return cityName;
     }

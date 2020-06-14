@@ -1,6 +1,5 @@
 package com.naura.cityApp.basemodel;
 
-import com.naura.cityApp.fragments.theatherdata.WeatherData;
 import java.util.List;
 
 public interface ICallData {

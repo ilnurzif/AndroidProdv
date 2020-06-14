@@ -13,8 +13,6 @@ import com.naura.cityApp.database.CityWeatherDb;
 import java.util.Date;
 import java.util.List;
 
-import io.reactivex.Completable;
-import io.reactivex.Maybe;
 import io.reactivex.Single;
 
 @Dao
@@ -49,14 +47,11 @@ public interface CityDao {
     @Query("Select id FROM citydb where city_name=:cityname")
     long getCityID(String cityname);
 
-/*    @Query("Select * from cityweatherdb left join citydb on cityweatherdb.city_id=citydb.id where citydb.city_name=:cityname order by mdate desc")
-    List<CityWeatherDb> getCityWeatherWithByName(String cityname);
-
-    @Query("Select * from cityweatherdb left join citydb on cityweatherdb.city_id=citydb.id where citydb.city_name=:cityname order by mdate desc limit :limit")
-    List<CityWeatherDb> getCityWeatherWithByNameM(String cityname, int limit);*/
-
     @Query("Select * from cityweatherdb left join citydb on cityweatherdb.city_id=citydb.id where citydb.city_name=:cityname order by mdate limit :limit")
     Single<List<CityWeatherDb>> getCityWeatherWithByName(String cityname, int limit);
+
+    @Query("Select * from cityweatherdb left join citydb on cityweatherdb.city_id=citydb.id where citydb.city_name=:cityname order by mdate limit :limit")
+    List<CityWeatherDb> getCityDataByName(String cityname, int limit);
 
     @Query("Select COUNT() from cityweatherdb")
     long getWeatherCount();

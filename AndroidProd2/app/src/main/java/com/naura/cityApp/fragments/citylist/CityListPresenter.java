@@ -5,7 +5,7 @@ import com.naura.cityApp.basemodel.CityLoader;
 import com.naura.cityApp.observercode.EventsConst;
 import com.naura.cityApp.observercode.Observable;
 import com.naura.cityApp.observercode.Observer;
-import com.naura.cityApp.fragments.citydetail.CityData;
+import com.naura.cityApp.basemodel.CityData;
 import com.naura.cityApp.fragments.citylist.ui.FragmentView;
 
 import java.util.ArrayList;
@@ -57,11 +57,10 @@ public class CityListPresenter implements Observer {
                 if (cityData == null)
                     return;
                 cityList.add(cityData);
-                if (fragmentView!=null)
-                fragmentView.updateCityList(cityList);
+                if (fragmentView != null)
+                    fragmentView.updateCityList(cityList);
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

@@ -5,18 +5,19 @@ import android.graphics.drawable.Drawable;
 
 import com.naura.cityApp.App;
 import com.naura.cityApp.basemodel.CityLoader;
-import com.naura.cityApp.fragments.citydetail.CityData;
-import com.naura.cityApp.location.CityLocation;
+import com.naura.cityApp.basemodel.CityData;
 import com.naura.cityApp.observercode.EventsConst;
 import com.naura.cityApp.observercode.Observable;
 import com.naura.cityApp.observercode.Observer;
+import com.naura.cityApp.utility.IImageLoadPresenter;
+import com.naura.cityApp.utility.ImageLoadModel;
 
 import javax.inject.Inject;
 
-public class MainActivityPresener implements Observer, IMainPresenter {
+public class MainActivityPresener implements Observer, IImageLoadPresenter {
     private static MainActivityPresener mainActivityPresener;
     private MainView mainView;
-    private MainActivityModel mainActivityModel;
+    private ImageLoadModel imageLoadModel;
 
     @Inject
     Observable observable;
@@ -29,9 +30,10 @@ public class MainActivityPresener implements Observer, IMainPresenter {
 
 
     public MainActivityPresener() {
-        mainActivityModel = new MainActivityModel(this, resources);
+        imageLoadModel = new ImageLoadModel(this, resources);
         App.getComponent().inject(this);
-        observable.subscribe(this);
+        if (observable != null)
+            observable.subscribe(this);
     }
 
     public static MainActivityPresener getInstance() {
@@ -71,6 +73,7 @@ public class MainActivityPresener implements Observer, IMainPresenter {
         }
 
         if (eventName.equals(EventsConst.cityLoadFinish)) {
+            if (mainView == null) return;
             String title = cityLoader.getDefaultCityName();
             mainView.setToolBarTitle(title);
         }
@@ -80,6 +83,7 @@ public class MainActivityPresener implements Observer, IMainPresenter {
             dataLoad(cityLoader.getDefaultCityName());
         }
         if (eventName.equals(EventsConst.searchFieldVisible)) {
+            if (mainView == null) return;
             Boolean visible = (Boolean) val;
             mainView.setSearchFieldVisible(visible);
         }
@@ -104,11 +108,11 @@ public class MainActivityPresener implements Observer, IMainPresenter {
         mainView.setToolBarTitle(cityName);
         if (cityData == null) return;
         String imageUrl = cityData.getImageUrl();
-        mainActivityModel.setBackGround(imageUrl);
+        imageLoadModel.startLoadImage(imageUrl);
     }
 
     @Override
-    public void setBackground(Drawable drawable) {
+    public void callDrawable(Drawable drawable) {
         mainView.setBackground(drawable);
     }
 

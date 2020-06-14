@@ -30,7 +30,7 @@ public class DatabaseModule {
     private final Context mContext;
 
    @DatabaseInfo
-    private final String mDBName = "cityweather15";
+    private final String mDBName = "cityweather18";
 
     public DatabaseModule (@ApplicationContext Context context) {
         mContext = context;

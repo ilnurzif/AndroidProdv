@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import com.naura.cityApp.fragments.theatherdata.WeatherData;
+import com.naura.cityApp.basemodel.WeatherData;
 import com.naura.myapplication.R;
 
 import java.util.List;
@@ -47,8 +47,6 @@ public class CitySearchFragment extends Fragment implements CitySearchFragmentVi
 
     private void initVisual(View view) {
         citySearchHistoryRW=view.findViewById(R.id.citySearchHistoryRW);
-/*        cityLoader=CityLoader.getInstance(getContext());
-        cityLoader.StartLoadWeatherWithCity();*/
         searchCityPresenter.StartLoadWeatherWithCity();
     }
 
@@ -61,18 +59,4 @@ public class CitySearchFragment extends Fragment implements CitySearchFragmentVi
         citySearchHistoryRW.setLayoutManager(linearLayoutManager);
         citySearchHistoryRW.setAdapter(historyListAdapter);
     }
-
-/*    @Override
-    public <T> void update(String eventName, T val) {
-     if (eventName.equals(EventsConst.LoadWeatherWithCityFinish)) {
-         List<WeatherData> weatherDataList = (List<WeatherData>) val;
-         if (weatherDataList == null) return;
-         HistoryListAdapter historyListAdapter = new HistoryListAdapter(weatherDataList);
-         DividerItemDecoration itemDecoration = new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL);
-         citySearchHistoryRW.addItemDecoration(itemDecoration);
-         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getContext());
-         citySearchHistoryRW.setLayoutManager(linearLayoutManager);
-         citySearchHistoryRW.setAdapter(historyListAdapter);
-     }
-    }*/
 }

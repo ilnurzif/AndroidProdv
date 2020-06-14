@@ -1,12 +1,10 @@
 package com.naura.cityApp.basemodel;
 
 import com.naura.cityApp.App;
-import com.naura.cityApp.fragments.citydetail.CityData;
 import com.naura.cityApp.database.CityDb;
 import com.naura.cityApp.database.CityWeatherDb;
 import com.naura.cityApp.database.basecode.CityDao;
 import com.naura.cityApp.utility.CityDataToCityDbAdapter;
-import com.naura.cityApp.fragments.theatherdata.WeatherData;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -20,13 +18,12 @@ import java.util.concurrent.Future;
 import io.reactivex.Completable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Action;
 import io.reactivex.observers.DisposableCompletableObserver;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
 // Класс для асинхронного взаимодействия с Room
-public class DaoThreadHelper {
+public class RoomRxHelper {
 
     public static void callCityAll(final List<CityData> cityDataList) {
         CityDao cityDao = App.getComponent().getCityDao();
@@ -36,6 +33,9 @@ public class DaoThreadHelper {
                     List<CityData> tempCityList = new ArrayList<>();
                     for (int i = 0; i < cityCount; i++) {
                         CityData cityData = CityDataToCityDbAdapter.convert(cityDbList.get(i));
+                        List<CityWeatherDb> cityWeatherDbs = cityDao.getCityDataByName(cityDbList.get(i).cityName, 10);
+                        if (cityWeatherDbs.size() > 0)
+                            cityData.setWeatherDays(CityDataToCityDbAdapter.convert(cityWeatherDbs));
                         tempCityList.add(cityData);
                     }
                     return tempCityList;
@@ -50,7 +50,6 @@ public class DaoThreadHelper {
 
                     @Override
                     public void onError(Throwable e) {
-
                     }
                 });
     }
@@ -137,11 +136,11 @@ public class DaoThreadHelper {
         return -1;
     }
 
-    public static int insertDb(final String cityName, final CityData cityData, final List<WeatherData> cityTheatherList, final boolean cityCached) {
+    public static long insertDb(final String cityName, final CityData cityData, final List<WeatherData> cityTheatherList, final boolean cityCached) {
         CityDao cityDao = App.getComponent().getCityDao();
         ExecutorService es = Executors.newSingleThreadExecutor();
-        Future<Integer> result = es.submit(() -> {
-            long city_id;
+        Future<Long> result = es.submit(() -> {
+            Long city_id;
             if (!cityCached) {
                 CityDb cityDb = CityDataToCityDbAdapter.convert(cityData);
                 city_id = cityDao.insertCity(cityDb);
@@ -155,7 +154,7 @@ public class DaoThreadHelper {
                 cityDao.deleteWeatherWithDate(city_id, date);
             }
             cityDao.insertWeatherList(cityWeatherDbList);
-            return 0; // для отслеживания успешности вставки
+            return city_id;
         });
         try {
             return result.get();

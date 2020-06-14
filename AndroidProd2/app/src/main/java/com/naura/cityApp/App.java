@@ -6,10 +6,12 @@ import com.naura.cityApp.di.component.ApplicationComponent;
 import com.naura.cityApp.di.component.DaggerApplicationComponent;
 import com.naura.cityApp.di.module.ApplicationModule;
 import com.naura.cityApp.di.module.CityLoaderModule;
+import com.naura.cityApp.di.module.CityLocationModule;
 import com.naura.cityApp.di.module.ConnectiveModule;
 import com.naura.cityApp.di.module.DatabaseModule;
 import com.naura.cityApp.di.module.ObservableModule;
 import com.naura.cityApp.di.module.RetrofitModule;
+import com.naura.cityApp.di.module.SharedPrefPropModule;
 
 
 public class App extends Application {
@@ -32,7 +34,9 @@ public class App extends Application {
                 .connectiveModule(new ConnectiveModule(this))
                 .retrofitModule(new RetrofitModule())
                 .observableModule(new ObservableModule())
-                .cityLoaderModule(new CityLoaderModule(this))
+                .cityLoaderModule(new CityLoaderModule())
+                .sharedPrefPropModule(new SharedPrefPropModule())
+                .cityLocationModule(new CityLocationModule())
                 .build();
         mApplicationComponent.inject(this);
     }

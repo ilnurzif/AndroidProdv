@@ -12,7 +12,7 @@ import com.google.android.material.snackbar.Snackbar;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.naura.cityApp.fragments.citydetail.CityData;
+import com.naura.cityApp.basemodel.CityData;
 import com.naura.cityApp.fragments.citylist.CityListPresenter;
 import com.naura.cityApp.utility.Utility;
 import com.naura.myapplication.R;

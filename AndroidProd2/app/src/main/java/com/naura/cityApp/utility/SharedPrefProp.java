@@ -1,22 +1,28 @@
 package com.naura.cityApp.utility;
 
-import android.content.Context;
 import android.content.SharedPreferences;
+import com.naura.cityApp.App;
+import javax.inject.Inject;
 
-import static android.content.Context.MODE_PRIVATE;
 
 public class SharedPrefProp {
+
+    @Inject
     SharedPreferences sharedPref;
 
-   public  void saveDefaultCity(Context context, String cityName) {
-      sharedPref = context.getSharedPreferences("citySetting",MODE_PRIVATE);
-      SharedPreferences.Editor editor=sharedPref.edit();
+    @Inject
+    SharedPreferences.Editor editor;
+
+    public SharedPrefProp() {
+        App.getComponent().inject(this);
+    }
+
+    public  void saveDefaultCity(String cityName) {
       editor.putString("defaultCityName", cityName);
       editor.commit();
     }
 
-    public  String loadDefaultCity(Context context) {
-      sharedPref = context.getSharedPreferences("citySetting",MODE_PRIVATE);
+    public  String loadDefaultCity() {
       String defaultCityName=sharedPref.getString("defaultCityName","Москва");
       return defaultCityName;
     }

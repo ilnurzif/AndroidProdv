@@ -9,7 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.naura.cityApp.fragments.theatherdata.WeatherData;
+import com.naura.cityApp.basemodel.WeatherData;
 import com.naura.myapplication.R;
 
 import java.util.List;

@@ -40,18 +40,6 @@
         tools:layout="@layout/city_list_fragment" />
 
     <fragment
-        android:id="@+id/about"
-        android:name="com.naura.cityApp.fragments.about.AboutFragment"
-        android:label="@string/title_about"
-        tools:layout="@layout/about" />
-
-    <fragment
-        android:id="@+id/setting"
-        android:name="com.naura.cityApp.fragments.setting.AppSettingFragment"
-        android:label="@string/title_setting"
-        tools:layout="@layout/app_settings" />
-
-    <fragment
         android:id="@+id/city_search_history"
         android:name="com.naura.cityApp.fragments.searchhistory.CitySearchFragment"
         android:label="@string/searchhistory"
