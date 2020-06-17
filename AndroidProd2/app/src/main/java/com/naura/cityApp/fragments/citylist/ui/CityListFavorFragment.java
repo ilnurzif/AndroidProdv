@@ -74,4 +74,14 @@ public class CityListFavorFragment extends Fragment implements FragmentView {
         cityListAdapter.setCityDataList(favorCityList);
         cityListAdapter.notifyDataSetChanged();
     }
+
+    @Override
+    public void startCityEvent(String cityName) {
+
+    }
+
+    @Override
+    public void CityFoundErrorMsg(String errMsg) {
+
+    }
 }

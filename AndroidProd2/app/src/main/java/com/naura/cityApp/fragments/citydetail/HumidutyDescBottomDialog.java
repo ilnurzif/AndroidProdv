@@ -17,12 +17,7 @@ public class HumidutyDescBottomDialog extends BottomSheetDialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.humiduty_dialog_layout, container, false);
         setCancelable(false);
-        view.findViewById(R.id.okButton).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dismiss();
-            }
-        });
+        view.findViewById(R.id.okButton).setOnClickListener(view1 -> dismiss());
         return view;
     }
 

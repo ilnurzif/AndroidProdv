@@ -8,4 +8,6 @@ public interface FragmentView {
     void setCityDataList(List<CityData> cityList);
     void updateCityList(List<CityData> cityList);
     void setFavorCityList(List<CityData> favorCityList);
+    void startCityEvent(String cityName);
+    void CityFoundErrorMsg(String errMsg);
 }

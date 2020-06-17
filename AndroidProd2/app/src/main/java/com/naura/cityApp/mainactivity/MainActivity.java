@@ -53,7 +53,7 @@ public class MainActivity extends BaseActivity implements MainView {
         super.onResume();
         if (ActivityCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            cityLocation.updateLocation();
+           cityLocation.updateLocation();
         } else {
             ActivityCompat.requestPermissions(MainActivity.this,
                     new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
@@ -163,6 +163,6 @@ public class MainActivity extends BaseActivity implements MainView {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == REQUEST_LOCATION_PERMISSION)
-            cityLocation.onRequestPermissionsResult(requestCode, grantResults);
+          cityLocation.onRequestPermissionsResult(requestCode, grantResults);
     }
 }

@@ -59,4 +59,5 @@
     <string name="maps">Карта</string>
     <string name="Maps">Карта</string>
     <string name="longClickMsg">Для выбора местности используйте долгое нажатие</string>
+    <string name="find_city_title">Идет поиск города</string>
 </resources>

@@ -239,8 +239,11 @@ public class CityLoader implements ICallData {
     }
 
     @Override
-    public String errorTextReturn(String errMsg) {
-        return null;
+    public void errorTextReturn(String errMsg) {
+        if (errMsg.equals("HTTP 404 Not Found")) {
+            observable.notify(EventsConst.ErrorCityFound, "Cервер не может найти информацию по указанному населенному пункту");
+        }
+        observable.notify(EventsConst.ErrorCityFound, "Ошибка сети");
     }
 
     public List<WeatherData> getDefaultCityWeatherList() {

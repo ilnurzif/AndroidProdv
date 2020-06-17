@@ -46,6 +46,7 @@ public class CityListPresenter implements Observer {
         try {
             if (eventName.equals(EventsConst.searchCityEvent)) {
                 String cityName = (String) val;
+                fragmentView.startCityEvent(cityName);
                 cityLoader.searchCity(cityName);
             }
 
@@ -59,6 +60,11 @@ public class CityListPresenter implements Observer {
                 cityList.add(cityData);
                 if (fragmentView != null)
                     fragmentView.updateCityList(cityList);
+            }
+
+            if (eventName.equals(EventsConst.ErrorCityFound)) {
+                String errMsg = (String) val;
+                fragmentView.CityFoundErrorMsg(errMsg);
             }
         } catch (Exception e) {
             e.printStackTrace();

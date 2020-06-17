@@ -70,6 +70,8 @@ public class RestLoadData implements ILoadData {
 
                     @Override
                     public void onError(Throwable e) {
+                        String str=e.getLocalizedMessage();
+                        String detail=e.getMessage();
                         callData.errorTextReturn(e.getMessage());
                     }
                 });

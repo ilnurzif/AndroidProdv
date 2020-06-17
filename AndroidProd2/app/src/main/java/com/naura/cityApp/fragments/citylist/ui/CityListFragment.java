@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,6 +23,7 @@ public class CityListFragment extends Fragment implements FragmentView {
     private RecyclerView recyclerView;
     private CityListAdapter cityListAdapter;
     private CityListPresenter cityListPresenter;
+    private LinearLayout findProgressLL;
 
     @Nullable
     @Override
@@ -49,6 +52,7 @@ public class CityListFragment extends Fragment implements FragmentView {
 
     private void initVisual(View view) {
         recyclerView = view.findViewById(R.id.citiesRecyclerView);
+        findProgressLL=view.findViewById(R.id.findProgressLL);
     }
 
     private void dataLoad() {
@@ -67,9 +71,21 @@ public class CityListFragment extends Fragment implements FragmentView {
     public void updateCityList(List<CityData> cityList) {
         cityListAdapter.setCityDataList(cityList);
         cityListAdapter.notifyDataSetChanged();
+        findProgressLL.setVisibility(View.INVISIBLE);
     }
 
     @Override
     public void setFavorCityList(List<CityData> favorCityList) {
+    }
+
+    @Override
+    public void startCityEvent(String cityName) {
+        findProgressLL.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void CityFoundErrorMsg(String errMsg) {
+        findProgressLL.setVisibility(View.INVISIBLE);
+        Toast.makeText(getContext(),errMsg,Toast.LENGTH_LONG).show();
     }
 }
