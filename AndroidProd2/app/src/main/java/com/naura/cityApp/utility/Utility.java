@@ -112,4 +112,9 @@ public class Utility {
         String dateStr = new SimpleDateFormat("E dd.MM.yyyy").format(date);
         return dateStr;
     }
+
+    public static String getMapIconUrl(String iconUrl) {
+        String url="i"+iconUrl;
+        return url;
+    }
 }

@@ -14,7 +14,7 @@
     <string name="home_second">Home Second</string>
     <string name="airhumidity">Влажность воздуха (%)</string>
     <string name="theather">Погода</string>
-    <string name="weekforecast">Прогноз на три дня</string>
+    <string name="weekforecast">Прогноз</string>
     <string name="moscow">Москва</string>
     <string name="Monday">пн</string>
     <string name="Tuesday">вт</string>

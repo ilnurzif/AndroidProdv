@@ -14,4 +14,5 @@ public class EventsConst {
     public static String LoadWeatherWithCityFinish ="StartLoadWeatherWithCity";
     public static String searchFieldVisible="searchFieldVisible";
     public static String ErrorCityFound="ErrorCityFound";
+    public static String CityDelComplete="CityDelComplete";
 }

@@ -73,7 +73,7 @@ public class CityLocation {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        if (list.isEmpty()) return;
+        if (list==null||list.isEmpty()) return;
         Address a = list.get(0);
         final int index = a.getMaxAddressLineIndex();
         String postal = null;

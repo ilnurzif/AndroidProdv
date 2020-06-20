@@ -24,7 +24,6 @@ import io.reactivex.schedulers.Schedulers;
 
 // Класс для асинхронного взаимодействия с Room
 public class RoomRxHelper {
-
     public static void callCityAll(final List<CityData> cityDataList) {
         CityDao cityDao = App.getComponent().getCityDao();
         Disposable disposable = cityDao.getAllCity()
@@ -85,6 +84,24 @@ public class RoomRxHelper {
                     @Override
                     public void onComplete() {
                         System.out.println("Completed!");
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                    }
+                });
+    }
+
+    public static void deleteCity(final ICallData callData, CityData city) {
+        CityDao cityDao = App.getComponent().getCityDao();
+        Completable.fromAction(() -> cityDao.deleteCity(CityDataToCityDbAdapter.convert(city)))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new DisposableCompletableObserver() {
+                    @Override
+                    public void onComplete() {
+                        callData.deleteComplete();
                     }
 
                     @Override

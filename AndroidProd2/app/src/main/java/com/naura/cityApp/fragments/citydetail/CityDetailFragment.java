@@ -12,6 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.naura.cityApp.basemodel.WeatherData;
@@ -93,6 +95,9 @@ public class CityDetailFragment extends Fragment implements CityDetailFragmentVi
     public void callTheatherList(List<WeatherData> theatherDays) {
         if (adapter == null) {
             adapter = new WeatherWeekAdapter(getActivity(), theatherDays);
+            DividerItemDecoration itemDecoration = new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL);
+            itemDecoration.setDrawable(getActivity().getDrawable(R.drawable.liteseparator));
+            recyclerView.addItemDecoration(itemDecoration);
             recyclerView.setAdapter(adapter);
         } else {
             adapter.setTheatherDays(theatherDays);

@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.naura.cityApp.basemodel.WeatherData;
+import com.naura.cityApp.utility.Utility;
 import com.naura.myapplication.R;
 
 import java.util.List;
@@ -19,10 +20,12 @@ import java.util.List;
 public class WeatherWeekAdapter extends RecyclerView.Adapter<WeatherWeekAdapter.ViewHolder> {
     private List<WeatherData> theatherDays;
     private LayoutInflater inflater;
+    private Context context;
 
     public WeatherWeekAdapter(Context context, List<WeatherData> theatherdays) {
         this.theatherDays = theatherdays;
         this.inflater = LayoutInflater.from(context);
+        this.context=context;
     }
 
     public void setTheatherDays(List<WeatherData> theatherDays) {
@@ -39,7 +42,9 @@ public class WeatherWeekAdapter extends RecyclerView.Adapter<WeatherWeekAdapter.
     @Override
     public void onBindViewHolder(@NonNull WeatherWeekAdapter.ViewHolder holder, int position) {
         WeatherData theatherDay = theatherDays.get(position);
-//        holder.weatherView.setImageResource(theatherDay.getTheathericon());
+        String iconUl= Utility.getMapIconUrl(theatherDay.getIconUrl());
+        int id = context.getResources().getIdentifier(iconUl, "drawable", context.getPackageName());
+        holder.weathericon.setImageResource(id);
         holder.temperatureView.setText(theatherDay.getFormatedTemperature());
         holder.weekdayView.setText(theatherDay.getDateStr());
         holder.descriptionView.setText(theatherDay.getDescription());
@@ -51,12 +56,12 @@ public class WeatherWeekAdapter extends RecyclerView.Adapter<WeatherWeekAdapter.
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        final ImageView weatherView;
+        final ImageView weathericon;
         final TextView weekdayView, temperatureView, descriptionView;
 
         ViewHolder(View view) {
             super(view);
-            weatherView = view.findViewById(R.id.weathericon);
+            weathericon = view.findViewById(R.id.weathericon);
             weekdayView = view.findViewById(R.id.weekday);
             temperatureView = view.findViewById(R.id.temperature);
             descriptionView = view.findViewById(R.id.description);

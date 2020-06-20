@@ -7,10 +7,13 @@ import com.naura.cityApp.observercode.EventsConst;
 import com.naura.cityApp.observercode.Observable;
 import com.naura.cityApp.rest.ILoadData;
 import com.naura.cityApp.rest.RestLoadData;
+import com.naura.cityApp.rest.WeatherAddParams;
 import com.naura.cityApp.utility.CityDataToCityDbAdapter;
 import com.naura.cityApp.utility.SharedPrefProp;
+import com.naura.cityApp.utility.Utility;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -198,8 +201,7 @@ public class CityLoader implements ICallData {
     }
 
     public void searchCity(String cityName) {
-        setDefaultCityName(cityName);
-        restLoadData.request(getDefaultCityName());
+        restLoadData.request(cityName);
     }
 
     public void StartLoadWeatherWithCity() {
@@ -234,20 +236,27 @@ public class CityLoader implements ICallData {
             observable.notify(EventsConst.addNewCity, cityData);
         } else {
             if (cityWeatherList != null && cityWeatherList.size() > 0)
-                observable.notify(EventsConst.cityLoadFinish, cityWeatherList);
+                observable.notify(EventsConst.cityLoadFinish,  cityWeatherList);
         }
     }
 
     @Override
     public void errorTextReturn(String errMsg) {
-        if (errMsg.equals("HTTP 404 Not Found")) {
-            observable.notify(EventsConst.ErrorCityFound, "Cервер не может найти информацию по указанному населенному пункту");
-        }
-        observable.notify(EventsConst.ErrorCityFound, "Ошибка сети");
+        observable.notify(EventsConst.ErrorCityFound, errMsg);
     }
 
     public List<WeatherData> getDefaultCityWeatherList() {
         return defaultCityWeatherList;
     }
 
+    public void deleteCity(int del_id) {
+        CityData cityData=cityList.get(del_id);
+        RoomRxHelper.deleteCity(this, cityData);
+        cityList.remove(cityData);
+    }
+
+    @Override
+    public void deleteComplete() {
+        observable.notify(EventsConst.CityDelComplete, null);
+    }
 }

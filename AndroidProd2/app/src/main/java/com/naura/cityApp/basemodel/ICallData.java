@@ -6,5 +6,7 @@ public interface ICallData {
     public void errorTextReturn(String errMsg);
     void callWeatherList(List<WeatherData> cityTheatherList, String cityName, boolean b);
     void callAllWeatherList(List<WeatherData> cityTheatherList, String cityName);
+
+    void deleteComplete();
 }
 

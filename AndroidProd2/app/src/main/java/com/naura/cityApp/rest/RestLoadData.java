@@ -51,8 +51,8 @@ public class RestLoadData implements ILoadData {
                     WeatherAddParams[] weatherAddParams = cityWeather.getWeatherAddParams();
                     WeatherData weatherData = respToTheatherData(weatherAddParams[0]);
                     cityWeatherList.add(weatherData);
-                    for (int i = 1; i < weatherAddParams.length; i++) {
-                        Date prevDate = weatherData.getDay();
+                   for (int i = 1; i < weatherAddParams.length; i++) {
+                       Date prevDate = weatherData.getDay();
                         weatherData = respToTheatherData(weatherAddParams[i]);
                         if (Utility.compareDates(prevDate, weatherData.getDay()) != 0) {
                             cityWeatherList.add(weatherData);

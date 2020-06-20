@@ -66,6 +66,9 @@ public class CityListPresenter implements Observer {
                 String errMsg = (String) val;
                 fragmentView.CityFoundErrorMsg(errMsg);
             }
+            if (eventName.equals(EventsConst.CityDelComplete)) {
+                fragmentView.setCityDataList(cityLoader.getCityList());
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -94,5 +97,9 @@ public class CityListPresenter implements Observer {
 
     public List<CityData> getFavorCityList() {
         return cityLoader.getFavorCityList();
+    }
+
+    public void delete(int del_id) {
+      cityLoader.deleteCity(del_id);
     }
 }

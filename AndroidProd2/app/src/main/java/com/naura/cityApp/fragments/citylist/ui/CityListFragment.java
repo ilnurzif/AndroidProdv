@@ -1,6 +1,7 @@
 package com.naura.cityApp.fragments.citylist.ui;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.naura.cityApp.basemodel.CityData;
@@ -24,6 +26,7 @@ public class CityListFragment extends Fragment implements FragmentView {
     private CityListAdapter cityListAdapter;
     private CityListPresenter cityListPresenter;
     private LinearLayout findProgressLL;
+    private ItemTouchHelper itemTouchHelper;
 
     @Nullable
     @Override
@@ -52,13 +55,30 @@ public class CityListFragment extends Fragment implements FragmentView {
 
     private void initVisual(View view) {
         recyclerView = view.findViewById(R.id.citiesRecyclerView);
-        findProgressLL=view.findViewById(R.id.findProgressLL);
+        findProgressLL = view.findViewById(R.id.findProgressLL);
     }
+
+    ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+        @Override
+        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+            return false;
+        }
+
+        @Override
+        public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
+            int del_id = viewHolder.getAdapterPosition();
+            cityListPresenter.delete(del_id);
+            Log.d("TAG", "onSwiped: ");
+        }
+    };
 
     private void dataLoad() {
         cityListPresenter = new CityListPresenter();
         cityListAdapter = new CityListAdapter(getActivity(), cityListPresenter.getCityList(), false, cityListPresenter);
         Utility.initReciclerViewAdapter(getActivity(), cityListAdapter, recyclerView);
+
+        itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
+        itemTouchHelper.attachToRecyclerView(recyclerView);
     }
 
     @Override
@@ -86,6 +106,6 @@ public class CityListFragment extends Fragment implements FragmentView {
     @Override
     public void CityFoundErrorMsg(String errMsg) {
         findProgressLL.setVisibility(View.INVISIBLE);
-        Toast.makeText(getContext(),errMsg,Toast.LENGTH_LONG).show();
+        Toast.makeText(getContext(), errMsg, Toast.LENGTH_LONG).show();
     }
 }
