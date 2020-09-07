@@ -41,7 +41,7 @@ public class MainActivity extends BaseActivity implements MainView {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+       this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         App.getComponent().inject(this);
         mainActivityPresener = MainActivityPresener.getInstance();
         setContentView(R.layout.activity_main);
@@ -64,7 +64,7 @@ public class MainActivity extends BaseActivity implements MainView {
 
     @Override
     protected void onPause() {
-         cityLocation.onPause();
+        cityLocation.onPause();
         mainActivityPresener.unBind();
         super.onPause();
     }
@@ -95,7 +95,7 @@ public class MainActivity extends BaseActivity implements MainView {
         navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
-        broadcastManager = new BroadcastManager(this);
+      //  broadcastManager = new BroadcastManager(this);
         cityLocation = CityLocation.getInstance(this);
     }
 

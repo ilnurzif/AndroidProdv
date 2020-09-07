@@ -17,6 +17,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.naura.myapplication.R;
 import com.squareup.picasso.Picasso;
 
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -83,28 +85,18 @@ public class Utility {
                 .into(imageView);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     public static Boolean checkActualData(Date firstDate) {
-        Date currentDate = new Date();
-        LocalDate firstlocalDate = firstDate.toInstant()
-                .atZone(ZoneId.systemDefault())
-                .toLocalDate();
-        LocalDate currlocalDate = currentDate.toInstant()
-                .atZone(ZoneId.systemDefault())
-                .toLocalDate();
-        return currlocalDate.compareTo(firstlocalDate) <= 0;
+           Date currentDate0 = new Date();
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            Date firstDecorateDate= new Date(firstDate.getYear(), firstDate.getMonth(),firstDate.getDay());
+            Date currentDate= new Date(currentDate0.getYear(), currentDate0.getMonth(),currentDate0.getDay());
+            return currentDate.compareTo(firstDecorateDate)<=0;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     public static int compareDates(Date date1, Date date2) {
-        Date currentDate = new Date();
-        LocalDate firstLocalDate = date1.toInstant()
-                .atZone(ZoneId.systemDefault())
-                .toLocalDate();
-        LocalDate secLocalDate = date2.toInstant()
-                .atZone(ZoneId.systemDefault())
-                .toLocalDate();
-        return firstLocalDate.compareTo(secLocalDate);
+     Date firstDecorateDate2= new Date(date1.getYear(), date1.getMonth(),date1.getDay());
+     Date currentDate2= new Date(date2.getYear(), date2.getMonth(),date2.getDay());
+     return firstDecorateDate2.compareTo(currentDate2);
     }
 
     public static String getCurrentDate() {
